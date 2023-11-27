@@ -20,7 +20,8 @@ namespace DbScript
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ReadExcel.readDataByRow("C:\\Users\\jaydutt\\source\\test\\TestDataGen\\DbScript\\dbConfig\\Enrollment\\PersonNameActual\\structure.xlsx", "structure");
+            var table=ReadExcel.ExcelDataToDataTable("C:\\Users\\jaydutt\\source\\test\\TestDataGen\\DbScript\\dbConfig\\Enrollment\\PersonNameActual\\structure.xlsx", "structure",true);
+            Console.Write(table);
         }
     }
 }
