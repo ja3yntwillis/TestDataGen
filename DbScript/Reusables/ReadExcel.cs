@@ -11,7 +11,7 @@ namespace TestDataGen.Reusables
 {
     public class ReadExcel
     {
-        public static DataTable ExcelDataToDataTable(string filePath, string sheetName, bool hasHeader = true)
+        public static DataTable ExcelDataToDataTable(string filePath, string sheetName, bool hasHeader)
         {
             var dt = new DataTable();
             var fi = new FileInfo(filePath);
@@ -28,26 +28,6 @@ namespace TestDataGen.Reusables
             });
 
             return dt;
-        }
-        public static void readSheet(string wb,string sheetname)
-        {
-            FileInfo existingFile = new FileInfo(wb);
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            using (ExcelPackage package = new ExcelPackage(existingFile))
-            {
-                ExcelWorksheet worksheet = package.Workbook.Worksheets[sheetname];
-                int colCount = worksheet.Dimension.End.Column;
-                int rowCount = worksheet.Dimension.End.Row;     
-                for (int row = 1; row <= rowCount; row++)
-                {
-
-                    for (int col = 1; col <= colCount; col++)
-                    {
-                        var    a=" Row:" + row + " column:" + col + " Value:" + worksheet.Cells[row, col].Value;
-                        Console.WriteLine();
-                    }
-                }
-            }
         }
 
 
