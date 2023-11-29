@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DbScript.Db;
+using System;
 using System.Windows.Forms;
 
 namespace DbScript
@@ -10,9 +11,11 @@ namespace DbScript
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void CheckConnection_Click(object sender, EventArgs e)
         {
-            Tool.Tool.StartTool();
+            // Tool.Tool.StartTool();
+            DatabaseConnection dbConnectObj = new DatabaseConnection();
+            ConnectionStatus.Text= dbConnectObj.connectioncheck()+"";
         }
     }
 }
