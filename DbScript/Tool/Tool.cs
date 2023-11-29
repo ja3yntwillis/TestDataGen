@@ -1,4 +1,5 @@
-﻿using DbScript.Reusables;
+﻿using DbScript.Db;
+using DbScript.Reusables;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,11 +11,11 @@ using TestDataGen.Reusables;
 namespace DbScript.Tool
 {
     internal class Tool
-    {
+    { 
       public static void StartTool()
         {
-            Dictionary<string, string> dbConfig = Config.Dbconfig();
-            var a= dbConfig["dbConnectionString"];
+            DatabaseConnection dbConnectObj = new DatabaseConnection();
+            dbConnectObj.connectioncheck();
         }
     }
 }
