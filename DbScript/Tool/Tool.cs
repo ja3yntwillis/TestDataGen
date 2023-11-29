@@ -14,8 +14,9 @@ namespace DbScript.Tool
     { 
       public static void StartTool()
         {
-            DatabaseConnection dbConnectObj = new DatabaseConnection();
-            dbConnectObj.connectioncheck();
+            
+
+
         }
     }
 }

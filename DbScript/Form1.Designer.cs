@@ -28,34 +28,47 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.CheckConnection = new System.Windows.Forms.Button();
+            this.ConnectionStatus = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // button1
+            // CheckConnection
             // 
-            this.button1.Location = new System.Drawing.Point(414, 169);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.CheckConnection.Location = new System.Drawing.Point(188, 143);
+            this.CheckConnection.Name = "CheckConnection";
+            this.CheckConnection.Size = new System.Drawing.Size(233, 35);
+            this.CheckConnection.TabIndex = 0;
+            this.CheckConnection.Text = "CheckConnection";
+            this.CheckConnection.UseVisualStyleBackColor = true;
+            this.CheckConnection.Click += new System.EventHandler(this.CheckConnection_Click);
+            // 
+            // ConnectionStatus
+            // 
+            this.ConnectionStatus.AutoSize = true;
+            this.ConnectionStatus.Location = new System.Drawing.Point(224, 245);
+            this.ConnectionStatus.Name = "ConnectionStatus";
+            this.ConnectionStatus.Size = new System.Drawing.Size(111, 16);
+            this.ConnectionStatus.TabIndex = 1;
+            this.ConnectionStatus.Text = "ConnectionStatus";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(1245, 433);
+            this.Controls.Add(this.ConnectionStatus);
+            this.Controls.Add(this.CheckConnection);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button CheckConnection;
+        private System.Windows.Forms.Label ConnectionStatus;
     }
 }
 
