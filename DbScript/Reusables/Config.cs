@@ -21,6 +21,7 @@ namespace DbScript.Reusables
             data.Add("authtype", commondata[2]);
             data.Add("user", commondata[3]);
             data.Add("password", commondata[4]);
+            data.Add("DbServer", commondata[5]);
             return data;
         }
     }
