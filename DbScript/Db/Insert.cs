@@ -14,20 +14,25 @@ namespace DbScript.Db
         public static bool insertion( string count, DataTable table,string schema,string tablename)
         {
             int dataCount=Convert.ToInt32(count);
-            string statement = "Insert into " + tablename + " (";
+            string statement = "Insert into " + tablename + " ( ";
             List<string> columns = DataOps.readDataTableByColumn("columnname", table);
+            List<string> requiredforinsert = DataOps.readDataTableByColumn("requiredforinsert", table);
             for (int i=0;i< columns.Count;i++)
             {
-                if (i != table.Rows.Count - 1)
+                if (requiredforinsert[i] == "Yes")
                 {
-                    statement = statement + columns[i] + ",";
-                }
-                else
-                {
-                    statement = statement + columns[i];
+                    if (i != table.Rows.Count - 1)
+                    {
+                        statement = statement + columns[i] + ",";
+                    }
+                    else
+                    {
+                        statement = statement + columns[i];
+                    }
                 }
             }
             statement = statement + " ) values (";
+
             return true;
         }
     }
