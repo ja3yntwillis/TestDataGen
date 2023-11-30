@@ -10,19 +10,20 @@ using System.Data.Odbc;
 using DbScript.Reusables;
 using System.Xml.Linq;
 using System.Collections;
+using System.Configuration;
 
 namespace DbScript.Db
 {
     internal class DatabaseConnection
     {
-        static Dictionary<string, string> dbConfig = Config.Dbconfig();
-        string databaseserver = dbConfig["dbConnectionString"];
-        string dbName = dbConfig["dbName"];
-        string authtype = dbConfig["authtype"];
-        string user = dbConfig["user"];
-        string password = dbConfig["password"];
-        string DbServer = dbConfig["DbServer"];
- 
+        string databaseserver = ConfigurationManager.AppSettings["databaseserver"];
+        string dbName = ConfigurationManager.AppSettings["dbName"];
+        string authtype = ConfigurationManager.AppSettings["authtype"];
+        string user = ConfigurationManager.AppSettings["user"];
+        string password = ConfigurationManager.AppSettings["password"];
+        string DbServer = ConfigurationManager.AppSettings["DbServer"];
+        string currpath = Config.getRootFolder();
+
         public SqlConnection getConnectionStringForSQLServer(string databaseserver, string database, string authtype, string user, string password, string Dbserver)
         {
             String CS = "";
@@ -64,12 +65,26 @@ namespace DbScript.Db
             }
             return dt;
         }
-        public ConnectionState connectioncheck()
+        public bool connectioncheck()
         {
+            bool message = false;
             SqlConnection Connection = getConnectionStringForSQLServer(databaseserver, dbName, authtype, user, password, DbServer);
-            Connection.Open();
-            var state = Connection.State;
-            return state;
+            try
+            {
+                Connection.Open();
+                var state = Connection.State;
+                if (state == ConnectionState.Open)
+                {
+                    Connection.Close();
+                }
+                message = true;
+            }
+            catch (Exception e)
+            {
+                message = false;
+            }
+
+            return  message;
 
         }
     }
