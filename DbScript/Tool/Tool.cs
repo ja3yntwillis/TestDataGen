@@ -27,9 +27,9 @@ namespace DbScript.Tool
                     var OperationType= table.Rows[i]["OperationType"].ToString();
                     string testfilepath = Config.getRootFolder() + "\\" + ConfigurationManager.AppSettings["dbfolder"] + "\\" + table.Rows[i]["Schema"].ToString() + "\\" + table.Rows[i]["Table"].ToString() + "\\" + ConfigurationManager.AppSettings["tablefilename"];
                     string testfileSheet = ConfigurationManager.AppSettings["tablefilesheet"];
-                    switch (OperationType)
+                    switch (OperationType.ToUpper().Trim())
                     {
-                        case "Insert":
+                        case "INSERT":
                             DataTable dataStructure= ReadExcel.ExcelDataToDataTable(testfilepath, testfileSheet, true);
                            bool result= Insert.insertion(table.Rows[i]["Count"].ToString(), dataStructure, table.Rows[i]["Schema"].ToString(), table.Rows[i]["Table"].ToString());
                             break;
