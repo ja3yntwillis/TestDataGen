@@ -1,5 +1,6 @@
 ﻿using DbScript.Db;
 using System;
+using System.Configuration;
 using System.Windows.Forms;
 
 namespace DbScript
@@ -22,12 +23,12 @@ namespace DbScript
            
             if (dbConnectObj.connectioncheck()==true)
             {
-                ConnectionStatus.Text = "Connection Successful";
+                ConnectionStatus.Text = "Connection Successful to "+ ConfigurationManager.AppSettings["dbName"];
                 ConnectionStatus.ForeColor = System.Drawing.Color.Green;
             }
             else
             {
-                ConnectionStatus.Text = "Connection Unuccessful Check Configuration";
+                ConnectionStatus.Text = "Connection Unuccessful Check Configuration for " + ConfigurationManager.AppSettings["dbName"]+" at App.config";
                 ConnectionStatus.ForeColor = System.Drawing.Color.Red;
             }
            
