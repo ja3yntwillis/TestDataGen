@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,23 +35,38 @@ namespace DbScript.DataGeneration
         }
 
         // Generate random digits with any specified length
-        public string RandomDigits(int length)
+
+        /* public string RandomDigits(int length)
+         {
+             //var random = new Random();
+             string finalstring = string.Empty;
+             for (int i = 0; i < length; i++)
+                 finalstring = String.Concat(finalstring, random.Next(10).ToString());
+             //Console.WriteLine(finalstring);
+             return finalstring;
+         }*/
+
+        // Generate random digits with any specified length
+        public static long RandomDigits(int length)
         {
             //var random = new Random();
             string finalstring = string.Empty;
             for (int i = 0; i < length; i++)
                 finalstring = String.Concat(finalstring, random.Next(10).ToString());
-            //Console.WriteLine(finalstring);
-            return finalstring;
+            long finalValue = Convert.ToInt64(finalstring);
+            Console.WriteLine(finalValue);
+            return finalValue;
         }
 
         // Generate Random Floating Point Number Between 0 and 1
         // Returns a random float value between 0 and 1
-        public float RandomFloatingNumber()
+        public static float RandomFloatingNumber(int length)
         {
             float randomFloat = (float)random.NextDouble();
-            //Console.WriteLine(randomFloat);
-            return randomFloat;
+            Console.WriteLine(randomFloat);
+            double finalResult = Math.Round(randomFloat, length);
+            Console.WriteLine(finalResult);
+            return (float)finalResult;
         }
 
         // Generate Random Floating Point Number Without a Range
@@ -105,8 +121,38 @@ namespace DbScript.DataGeneration
             return lowerCase ? builder.ToString().ToLower() : builder.ToString();
         }
 
+        public static string RandomAlphabates(int size, String caseType) { 
+        // String of alphabets  
+        String lowerCharacters = "abcdefghijklmnopqrstuvwxyz";
+        String upperCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            // Initializing the empty string 
+        String randomValue = "";
+
+            for (int i = 0; i<size; i++) 
+        { 
+  
+            // Selecting a index randomly 
+            int index = random.Next(26);
+
+                // Appending the character at the  
+                // index to the random string. 
+                if (caseType.ToLower().Trim() == "lowercase")
+                {
+                    randomValue = randomValue + lowerCharacters[index];
+                }
+                else if (caseType.ToLower().Trim() == "uppercase")
+                {
+                    randomValue = randomValue + upperCharacters[index];
+                }
+            }
+            Console.WriteLine(randomValue);
+            return randomValue;
+
+        }
+
+
         // Generates a random alphanumeric string with a given size
-        public string RandomAlphanumericString(int size, String caseType)
+        public static string RandomAlphanumericString(int size, String caseType)
         {
             var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             var lowerCharacters = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -114,21 +160,21 @@ namespace DbScript.DataGeneration
             var Charsize = new char[size];
 
           for (int i = 0; i< Charsize.Length; i++) {
-                if (caseType.ToLower() == "lowercase")
+                if (caseType.ToLower().Trim() == "lowercasealphanumeric")
                 {
                     Charsize[i] = lowerCharacters[random.Next(lowerCharacters.Length)];
                 }
-                else if (caseType.ToLower() == "uppercase")
+                else if (caseType.ToLower().Trim() == "uppercasealphanumeric")
                 {
                     Charsize[i] = upperCharacters[random.Next(lowerCharacters.Length)];
                 }
-                else if(caseType.ToLower() == "both")
+                else if(caseType.ToLower().Trim() == "bothcasealphanumeric")
                 {
                     Charsize[i] = characters[random.Next(characters.Length)];
                 }
           }
             var resultString = new String(Charsize);
-            //Console.WriteLine(resultString);
+            Console.WriteLine(resultString);
             return resultString;
     }
 
@@ -142,7 +188,7 @@ namespace DbScript.DataGeneration
         }
 
         // Generates a random alphanumeric + Special Character string with a given size
-        public string RandomAlphanumericWithSpecialChracterString(int length, String caseType)
+        public static string RandomAlphanumericWithSpecialChracterString(int length, String caseType)
         {
             String lowerCase = "abcdefghijklmnopqrstuvwxyz0123456789";
             String upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -152,7 +198,7 @@ namespace DbScript.DataGeneration
            // int length = 6;
             String randomValue = "";
 
-            if (caseType.ToLower() == "lowercase")
+            if (caseType.ToLower().Trim() == "lowercasenumericwithspecialchar")
             {
                 for (int i = 0; i < length; i++)
                 {
@@ -161,7 +207,7 @@ namespace DbScript.DataGeneration
                 }
             }
 
-            else if(caseType.ToLower() == "uppercase")
+            else if(caseType.ToLower().Trim() == "uppercasenumericwithspecialchar")
             {
                 for (int i = 0; i < length; i++)
                 {
@@ -171,7 +217,7 @@ namespace DbScript.DataGeneration
 
             }
 
-            else if (caseType.ToLower() == "both")
+            else if (caseType.ToLower().Trim() == "bothcasenumericwithspecialchar")
             {
                 for (int i = 0; i < length; i++)
                 {
@@ -186,7 +232,7 @@ namespace DbScript.DataGeneration
                 randomValue = randomValue + specialCharacter.ElementAt(stringLength);
             }
 
-            //Console.WriteLine("The random alphabet generated is: {0}", randomValue);
+            Console.WriteLine("The random alphabet generated is: {0}", randomValue);
             return randomValue;
         }
 
