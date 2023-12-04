@@ -125,8 +125,9 @@ namespace DbScript.DataGeneration
         // String of alphabets  
         String lowerCharacters = "abcdefghijklmnopqrstuvwxyz";
         String upperCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+       // String bothCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
             // Initializing the empty string 
-        String randomValue = "";
+            String randomValue = "";
 
             for (int i = 0; i<size; i++) 
         { 
@@ -144,6 +145,10 @@ namespace DbScript.DataGeneration
                 {
                     randomValue = randomValue + upperCharacters[index];
                 }
+                /*else if (caseType.ToLower().Trim() == "bothcase")
+                {
+                    randomValue = randomValue + bothCharacters[index];
+                }*/
             }
             Console.WriteLine(randomValue);
             return randomValue;
@@ -232,8 +237,23 @@ namespace DbScript.DataGeneration
                 randomValue = randomValue + specialCharacter.ElementAt(stringLength);
             }
 
-            Console.WriteLine("The random alphabet generated is: {0}", randomValue);
+            Console.WriteLine(randomValue);
             return randomValue;
+        }
+
+        // Generates a random boolean value
+        public static Boolean RandomBoolean()
+        {
+            bool randomBool = random.Next(2) == 1;
+            Console.WriteLine(randomBool);
+            return randomBool;
+        }
+        // Generates a random bit value
+        public static int RandomBit()
+        {
+            int result = random.Next(0, 2);
+            Console.WriteLine(result);
+            return result;
         }
 
     }

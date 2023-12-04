@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using DbScript.DataGeneration;
@@ -20,11 +21,11 @@ namespace DbScript.DataGeneration
                
                     switch (format.ToLower().Trim()) // long /float
                     {
-                        case ("long"):
+                        case "long":
                             RandomDataGeneration.RandomDigits(size);
                             Console.WriteLine("Random Test Data Genaration For Long Done Here");
                             break;
-                        case ("float"):
+                        case "float":
                             RandomDataGeneration.RandomFloatingNumber(size);
                             Console.WriteLine("Random Test Data Genaration For Long Done Here");
                             break;
@@ -37,35 +38,35 @@ namespace DbScript.DataGeneration
                     // [lowercasealphanumeric/uppercasealphanumeric/bothcasealphanumeric] /
                     // [lowercasenumericwithspecialchar/uppercasenumericwithspecialchar/bothcasenumericwithspecialchar]
                     {
-                        case ("lowercase"):
+                        case "lowercase":
                             RandomDataGeneration.RandomAlphabates(size, "lowercase");
                             Console.WriteLine("Random Test Data Genaration For Lowercase Done Here");
                             break;
-                        case ("uppercase"):
+                        case "uppercase":
                             RandomDataGeneration.RandomAlphabates(size, "uppercase");
                             Console.WriteLine("Random Test Data Genaration For Uppercase Done Here");
                             break;
-                        case ("lowercaseAlphanumeric"):
+                        case "lowercasealphanumeric":
                             RandomDataGeneration.RandomAlphanumericString(size, "lowercasealphanumeric");
                             Console.WriteLine("Random Test Data Genaration For LowercaseAlphanumeric Done Here");
                             break;
-                        case ("uppercaseAlphanumeric"):
+                        case "uppercasealphanumeric":
                             RandomDataGeneration.RandomAlphanumericString(size, "uppercasealphanumeric");
                             Console.WriteLine("Random Test Data Genaration For UppercaseAlphanumeric Done Here");
                             break;
-                        case ("bothCaseAlphanumeric"):
+                        case "bothcasealphanumeric":
                             RandomDataGeneration.RandomAlphanumericString(size, "bothcasealphanumeric");
                             Console.WriteLine("Random Test Data Genaration For BothCaseAlphanumeric Done Here");
                             break;
-                        case ("lowercasenumericwithspecialchar"):
+                        case "lowercasenumericwithspecialchar":
                             RandomDataGeneration.RandomAlphanumericWithSpecialChracterString(size, "lowercasenumericwithspecialchar");
                             Console.WriteLine("Random Test Data Genaration For Lowercasenumericwithspecialchar Done Here");
                             break;
-                        case ("uppercasenumericwithspecialchar"):
+                        case "uppercasenumericwithspecialchar":
                             RandomDataGeneration.RandomAlphanumericWithSpecialChracterString(size, "uppercasenumericwithspecialchar");
                             Console.WriteLine("Random Test Data Genaration For Uppercasenumericwithspecialchar Done Here");
                             break;
-                        case ("bothcasenumericwithspecialchar"):
+                        case "bothcasenumericwithspecialchar":
                             RandomDataGeneration.RandomAlphanumericWithSpecialChracterString(size, "bothcasenumericwithspecialchar");
                             Console.WriteLine("Random Test Data Genaration For Bothcasenumericwithspecialchar Done Here");
                             break;
@@ -73,6 +74,21 @@ namespace DbScript.DataGeneration
 
                     }
                     break;
+                case "boolean":
+                    RandomDataGeneration.RandomBoolean();
+                    Console.WriteLine("Random Test Data Genaration For Boolean Done Here");
+                    break;
+
+                case "bit":
+                    RandomDataGeneration.RandomBit();
+                    Console.WriteLine("Random Test Data Genaration For Bit Done Here");
+                    break;
+
+               case "date":
+                    RandomDataGeneration.GetRandomDateTime(format);
+                    Console.WriteLine("Random Test Data Genaration For Date Done Here");
+                    break;
+
                 default: break;
             }
         }

@@ -31,7 +31,7 @@ namespace DbScript.Tool
                     {
                         case "INSERT":
                             DataTable dataStructure= ReadExcel.ExcelDataToDataTable(testfilepath, testfileSheet, true);
-                           bool result= Insert.insertion(table.Rows[i]["Count"].ToString(), dataStructure, table.Rows[i]["Schema"].ToString(), table.Rows[i]["Table"].ToString());
+                            bool result = Insert.insertion(table.Rows[i]["Count"].ToString(), dataStructure, table.Rows[i]["Schema"].ToString(), table.Rows[i]["Table"].ToString());
                             break;
                         default: break;
 
