@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DbScript.DataGeneration;
 
 namespace DbScript.Db
 {
@@ -52,28 +53,28 @@ namespace DbScript.Db
         //                {
         //                    if (type[i].ToUpper().Trim() == "INT" || type[i].ToUpper().Trim() == "BOOL" || type[i]=="BIT")
         //                    {
-        //                        dataset = dataset + CallingRandomDataGeneration.RandomDataGenerationCalling      (type[i], size[i], format[i])+",";
+        //                        dataset = dataset + GenerateRandomData.GetRandomData(type[i], size[i], format[i])+",";
         //                    }
         //                    else
         //                    {
-        //                       dataset = dataset+"'" + CallingRandomDataGeneration.RandomDataGenerationCalling(type[i], size[i], format[i])+"',";
+        //                       dataset = dataset+"'" + GenerateRandomData.GetRandomData(type[i], size[i], format[i])+"',";
         //                    }
         //                }
         //                else
         //                {
         //                    if (type[i].ToUpper().Trim() == "INT" || type[i].ToUpper().Trim() == "BOOL" || type[i] == "BIT")
         //                    {
-        //                        dataset = dataset + CallingRandomDataGeneration.RandomDataGenerationCalling(type[i], size[i], format[i]);
+        //                        dataset = dataset + GenerateRandomData.GetRandomData(type[i], size[i], format[i]);
         //                    }
         //                    else
         //                    {
-        //                        dataset = dataset + "'" + CallingRandomDataGeneration.RandomDataGenerationCalling(type[i], size[i], format[i]) "'";
+        //                        dataset = dataset + "'" + GenerateRandomData.GetRandomData(type[i], size[i], format[i]) "'";
         //                    }
         //                }
         //            }
         //        scripts = baseScript.Replace("{{data}}", dataset);
         //        }
-            
+
 
         //    return scripts;
 
