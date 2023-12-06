@@ -12,7 +12,6 @@ namespace DbScript.DataGeneration
     internal class RandomDataGeneration
     {
         // Instantiate random number generator
-        //private readonly Random random = new Random();
         public static Random random = new Random();
 
         // Generate Random Number in Min to Max Range
@@ -20,7 +19,6 @@ namespace DbScript.DataGeneration
         public int RandomNumberWithinMinToMaxRange(int min, int max)
         {
             int finalNumber = random.Next(min, max);
-            //Console.WriteLine(finalNumber);
             return finalNumber;
         }
 
@@ -29,7 +27,6 @@ namespace DbScript.DataGeneration
         public int RandomNumberInRange(int range)
         {
             int finalNumber = random.Next(range);
-            //Console.WriteLine(finalNumber);
             return finalNumber;
 
         }
@@ -49,12 +46,10 @@ namespace DbScript.DataGeneration
         // Generate random digits with any specified length
         public static long RandomDigits(int length)
         {
-            //var random = new Random();
             string finalstring = string.Empty;
             for (int i = 0; i < length; i++)
-                finalstring = String.Concat(finalstring, random.Next(10).ToString());
+                finalstring = String.Concat(finalstring, random.Next(1,10).ToString());
             long finalValue = Convert.ToInt64(finalstring);
-            Console.WriteLine(finalValue);
             return finalValue;
         }
 
@@ -63,9 +58,7 @@ namespace DbScript.DataGeneration
         public static float RandomFloatingNumber(int length)
         {
             float randomFloat = (float)random.NextDouble();
-            Console.WriteLine(randomFloat);
             double finalResult = Math.Round(randomFloat, length);
-            Console.WriteLine(finalResult);
             return (float)finalResult;
         }
 
@@ -73,7 +66,6 @@ namespace DbScript.DataGeneration
         public double RandomFloatingNumberWithoutRange()
         {
             double range = (double)float.MaxValue - (double)float.MinValue;
-            //Console.WriteLine(range);
             return range;
         }
 
@@ -86,7 +78,6 @@ namespace DbScript.DataGeneration
             double sample = random.NextDouble();
             double scaled = (sample * range) + min;
             float finalNumber = (float)scaled;
-            //Console.WriteLine(finalNumber);
             return finalNumber;
         }
         // The precision of float is only six or seven decimal digits
@@ -94,7 +85,6 @@ namespace DbScript.DataGeneration
         {
             System.Random random = new System.Random();
             double val = (random.NextDouble() * (max - min) + min);
-            //Console.WriteLine((float)val);
             return (float)val;
         }
 
@@ -117,7 +107,6 @@ namespace DbScript.DataGeneration
                 var @char = (char)random.Next(offset, offset + lettersOffset);
                 builder.Append(@char);
             }
-            //Console.WriteLine(lowerCase ? builder.ToString().ToLower() : builder.ToString();
             return lowerCase ? builder.ToString().ToLower() : builder.ToString();
         }
 
@@ -137,20 +126,19 @@ namespace DbScript.DataGeneration
 
                 // Appending the character at the  
                 // index to the random string. 
-                if (caseType.ToLower().Trim() == "lowercase")
+                if (caseType.ToUpper().Trim() == "LOWERCASE")
                 {
                     randomValue = randomValue + lowerCharacters[index];
                 }
-                else if (caseType.ToLower().Trim() == "uppercase")
+                else if (caseType.ToUpper().Trim() == "UPPERCASE")
                 {
                     randomValue = randomValue + upperCharacters[index];
                 }
-                /*else if (caseType.ToLower().Trim() == "bothcase")
+                /*else if (caseType.ToUpper().Trim() == "BOTHCASE")
                 {
                     randomValue = randomValue + bothCharacters[index];
                 }*/
             }
-            Console.WriteLine(randomValue);
             return randomValue;
 
         }
@@ -165,30 +153,27 @@ namespace DbScript.DataGeneration
             var Charsize = new char[size];
 
           for (int i = 0; i< Charsize.Length; i++) {
-                if (caseType.ToLower().Trim() == "lowercasealphanumeric")
+                if (caseType.ToUpper().Trim() == "LOWERCASEALPHANUMERIC")
                 {
                     Charsize[i] = lowerCharacters[random.Next(lowerCharacters.Length)];
                 }
-                else if (caseType.ToLower().Trim() == "uppercasealphanumeric")
+                else if (caseType.ToUpper().Trim() == "UPPERCASEALPHANUMERIC")
                 {
                     Charsize[i] = upperCharacters[random.Next(lowerCharacters.Length)];
                 }
-                else if(caseType.ToLower().Trim() == "bothcasealphanumeric")
+                else if(caseType.ToUpper().Trim() == "BOTHCASEALPHANUMERIC")
                 {
                     Charsize[i] = characters[random.Next(characters.Length)];
                 }
           }
             var resultString = new String(Charsize);
-            Console.WriteLine(resultString);
             return resultString;
     }
 
         // Generates a Random Date Value With a Given Format (e.g.- ("yyyy-mm-dd HH:mm:ss.ff"), ("yyyy-mm-dd"))
         public static String GetRandomDateTime(string outputdateformat)
         {
-            // return DateTime.Now.AddDays(new Random().Next(1000));
             var mydate = DateTime.Now.AddDays(new Random().Next(1000));
-            //Console.WriteLine(mydate.ToString(outputdateformat));
             return mydate.ToString(outputdateformat);
         }
 
@@ -200,33 +185,32 @@ namespace DbScript.DataGeneration
             String bothCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
             String specialCharacter = "!@#$%^&*~";
-           // int length = 6;
             String randomValue = "";
 
-            if (caseType.ToLower().Trim() == "lowercasenumericwithspecialchar")
+            if (caseType.ToUpper().Trim() == "LOWERCASENUMERICWITHSPECIALCHAR") 
             {
                 for (int i = 0; i < length; i++)
                 {
-                    int stringLength = random.Next(lowerCase.Length); //string.Lenght gets the size of string
+                    int stringLength = random.Next(lowerCase.Length);
                     randomValue = randomValue + lowerCase.ElementAt(stringLength);
                 }
             }
 
-            else if(caseType.ToLower().Trim() == "uppercasenumericwithspecialchar")
+            else if(caseType.ToUpper().Trim() == "UPPERCASENUMERICWITHSPECIALCHAR")
             {
                 for (int i = 0; i < length; i++)
                 {
-                    int stringLength = random.Next(upperCase.Length); //string.Lenght gets the size of string
+                    int stringLength = random.Next(upperCase.Length); 
                     randomValue = randomValue + upperCase.ElementAt(stringLength);
                 }
 
             }
 
-            else if (caseType.ToLower().Trim() == "bothcasenumericwithspecialchar")
+            else if (caseType.ToUpper().Trim() == "BOTHCASENUMERICWITHSPECIALCHAR")
             {
                 for (int i = 0; i < length; i++)
                 {
-                    int stringLength = random.Next(bothCase.Length); //string.Lenght gets the size of string
+                    int stringLength = random.Next(bothCase.Length); 
                     randomValue = randomValue + bothCase.ElementAt(stringLength);
                 }
 
@@ -237,7 +221,6 @@ namespace DbScript.DataGeneration
                 randomValue = randomValue + specialCharacter.ElementAt(stringLength);
             }
 
-            Console.WriteLine(randomValue);
             return randomValue;
         }
 
@@ -245,14 +228,12 @@ namespace DbScript.DataGeneration
         public static Boolean RandomBoolean()
         {
             bool randomBool = random.Next(2) == 1;
-            Console.WriteLine(randomBool);
             return randomBool;
         }
         // Generates a random bit value
         public static int RandomBit()
         {
             int result = random.Next(0, 2);
-            Console.WriteLine(result);
             return result;
         }
 

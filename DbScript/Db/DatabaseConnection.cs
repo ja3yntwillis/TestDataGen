@@ -16,15 +16,16 @@ namespace DbScript.Db
 {
     internal class DatabaseConnection
     {
-        string databaseserver = ConfigurationManager.AppSettings["databaseserver"];
-        string dbName = ConfigurationManager.AppSettings["dbName"];
-        string authtype = ConfigurationManager.AppSettings["authtype"];
-        string user = ConfigurationManager.AppSettings["user"];
-        string password = ConfigurationManager.AppSettings["password"];
-        string DbServer = ConfigurationManager.AppSettings["DbServer"];
-        string currpath = Config.getRootFolder();
+        static string databaseserver = ConfigurationManager.AppSettings["databaseserver"];
+        public static string dbName = ConfigurationManager.AppSettings["dbName"];
+        static string authtype = ConfigurationManager.AppSettings["authtype"];
+        static string user = ConfigurationManager.AppSettings["user"];
+        static string password = ConfigurationManager.AppSettings["password"];
+        static string DbServer = ConfigurationManager.AppSettings["DbServer"];
+        static string currpath = Config.getRootFolder();
+        public static SqlConnection Connection = getConnectionStringForSQLServer(databaseserver, dbName, authtype, user, password, DbServer);
 
-        public SqlConnection getConnectionStringForSQLServer(string databaseserver, string database, string authtype, string user, string password, string Dbserver)
+        public static SqlConnection getConnectionStringForSQLServer(string databaseserver, string database, string authtype, string user, string password, string Dbserver)
         {
             String CS = "";
             switch (Dbserver)

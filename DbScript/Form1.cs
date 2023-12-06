@@ -29,32 +29,10 @@ namespace DbScript
            
             if (dbConnectObj.connectioncheck()==true)
             {
-                ConnectionStatus.Text = "Connection Successful to "+ ConfigurationManager.AppSettings["dbName"];
+                ConnectionStatus.Text = "Connection Successful to "+ DatabaseConnection.dbName;
                 ConnectionStatus.ForeColor = System.Drawing.Color.Green;
 
-                // To check insertion is hppening or not //
-               /* string databaseserver = ConfigurationManager.AppSettings["databaseserver"];
-                string dbName = ConfigurationManager.AppSettings["dbName"];
-                string authtype = ConfigurationManager.AppSettings["authtype"];
-                string user = ConfigurationManager.AppSettings["user"];
-                string password = ConfigurationManager.AppSettings["password"];
-                string DbServer = ConfigurationManager.AppSettings["DbServer"];
-                SqlConnection Connection = dbConnectObj.getConnectionStringForSQLServer(databaseserver, dbName, authtype, user, password, DbServer);
-                String query = "INSERT INTO dbo.person (firstName,lastName) VALUES ('IMTestFirst','IMTestLast')";
-                
-               try
-                {
-                    Connection.Open();
-                    SqlCommand command = new SqlCommand(query, Connection);
-                    command.ExecuteNonQuery();
-                    Console.WriteLine("Query executed and data has been inserted.");
-                    Connection.Close();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.StackTrace);
-                }*/
-              // piyali end //  
+               // Insert.insertData("INSERT INTO dbo.person (firstName,lastName) VALUES ('IMTestFirst','IMTestLast')");
 
             }
             else

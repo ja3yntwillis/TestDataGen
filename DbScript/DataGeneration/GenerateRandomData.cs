@@ -10,24 +10,21 @@ namespace DbScript.DataGeneration
 {
     internal class GenerateRandomData
     {
-        public static void GetRandomData(String type, int size, String format)
+        public static String GetRandomData(String type, int size, String format)
         {
-            //string TypeofNumeric = "integer";
+            string result = "";
 
             switch (type.ToLower().Trim())
             {
                 case "int":
-                    Console.WriteLine("This is a part of integer switch");
-               
+            
                     switch (format.ToLower().Trim()) // long /float
                     {
                         case "long":
-                            RandomDataGeneration.RandomDigits(size);
-                            Console.WriteLine("Random Test Data Genaration For Long Done Here");
+                            result = RandomDataGeneration.RandomDigits(size).ToString();
                             break;
                         case "float":
-                            RandomDataGeneration.RandomFloatingNumber(size);
-                            Console.WriteLine("Random Test Data Genaration For Long Done Here");
+                            result = RandomDataGeneration.RandomFloatingNumber(size).ToString();
                             break;
                     }
                     break;
@@ -39,58 +36,50 @@ namespace DbScript.DataGeneration
                     // [lowercasenumericwithspecialchar/uppercasenumericwithspecialchar/bothcasenumericwithspecialchar]
                     {
                         case "lowercase":
-                            RandomDataGeneration.RandomAlphabates(size, "lowercase");
-                            Console.WriteLine("Random Test Data Genaration For Lowercase Done Here");
+                            result = RandomDataGeneration.RandomAlphabates(size, "lowercase");
                             break;
                         case "uppercase":
-                            RandomDataGeneration.RandomAlphabates(size, "uppercase");
-                            Console.WriteLine("Random Test Data Genaration For Uppercase Done Here");
+                            result = RandomDataGeneration.RandomAlphabates(size, "uppercase");
                             break;
                         case "lowercasealphanumeric":
-                            RandomDataGeneration.RandomAlphanumericString(size, "lowercasealphanumeric");
-                            Console.WriteLine("Random Test Data Genaration For LowercaseAlphanumeric Done Here");
+                            result = RandomDataGeneration.RandomAlphanumericString(size, "lowercasealphanumeric");
                             break;
                         case "uppercasealphanumeric":
-                            RandomDataGeneration.RandomAlphanumericString(size, "uppercasealphanumeric");
-                            Console.WriteLine("Random Test Data Genaration For UppercaseAlphanumeric Done Here");
+                            result = RandomDataGeneration.RandomAlphanumericString(size, "uppercasealphanumeric");
                             break;
                         case "bothcasealphanumeric":
-                            RandomDataGeneration.RandomAlphanumericString(size, "bothcasealphanumeric");
-                            Console.WriteLine("Random Test Data Genaration For BothCaseAlphanumeric Done Here");
+                            result = RandomDataGeneration.RandomAlphanumericString(size, "bothcasealphanumeric");
                             break;
                         case "lowercasenumericwithspecialchar":
-                            RandomDataGeneration.RandomAlphanumericWithSpecialChracterString(size, "lowercasenumericwithspecialchar");
-                            Console.WriteLine("Random Test Data Genaration For Lowercasenumericwithspecialchar Done Here");
+                            result = RandomDataGeneration.RandomAlphanumericWithSpecialChracterString(size, "lowercasenumericwithspecialchar");
                             break;
                         case "uppercasenumericwithspecialchar":
-                            RandomDataGeneration.RandomAlphanumericWithSpecialChracterString(size, "uppercasenumericwithspecialchar");
-                            Console.WriteLine("Random Test Data Genaration For Uppercasenumericwithspecialchar Done Here");
+                            result = RandomDataGeneration.RandomAlphanumericWithSpecialChracterString(size, "uppercasenumericwithspecialchar");
                             break;
                         case "bothcasenumericwithspecialchar":
-                            RandomDataGeneration.RandomAlphanumericWithSpecialChracterString(size, "bothcasenumericwithspecialchar");
-                            Console.WriteLine("Random Test Data Genaration For Bothcasenumericwithspecialchar Done Here");
+                            result = RandomDataGeneration.RandomAlphanumericWithSpecialChracterString(size, "bothcasenumericwithspecialchar");
                             break;
 
 
                     }
                     break;
                 case "boolean":
-                    RandomDataGeneration.RandomBoolean();
-                    Console.WriteLine("Random Test Data Genaration For Boolean Done Here");
+                    result = RandomDataGeneration.RandomBoolean().ToString();
                     break;
 
                 case "bit":
-                    RandomDataGeneration.RandomBit();
-                    Console.WriteLine("Random Test Data Genaration For Bit Done Here");
+                    result = RandomDataGeneration.RandomBit().ToString();
                     break;
 
                case "date":
-                    RandomDataGeneration.GetRandomDateTime(format);
-                    Console.WriteLine("Random Test Data Genaration For Date Done Here");
+                    result = RandomDataGeneration.GetRandomDateTime(format);
                     break;
+                
 
                 default: break;
+
             }
+            return result;
         }
         }
 }
