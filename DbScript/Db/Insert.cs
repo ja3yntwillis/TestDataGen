@@ -61,11 +61,11 @@ namespace DbScript.Db
                 if (requiredforinsert[i].ToUpper().Trim() == "YES")
                 {
                     string generatedData = "";
-                    if (typeOfGen[i].ToUpper()=="RANDOM")
+                    if (typeOfGen[i].ToUpper().Trim()=="RANDOM")
                     {
                         generatedData= GenerateRandomData.GetRandomData(type[i], size[i], format[i]);
                     }
-                    if (typeOfGen[i].ToUpper()=="SHEET")
+                    if (typeOfGen[i].ToUpper().Trim()=="SHEET")
                     {
                         generatedData = CaptureSheetData.readDatafromSheet(columnName[i], dataSet,loopindex);
                     }
@@ -132,16 +132,25 @@ namespace DbScript.Db
 
         public static DataTable performInsertion(DataTable table, string schema, string tablename, string count)
         {
-            DataTable tableData = null;
+
+            //Create Result dir to store result//
+            Config.createResultDir(schema, tablename);
+
+             //Prepare Dataset to add results
+            List<string> columnName = DataOps.readDataTableByColumn("columnname", table);
+            DataTable resultData = Config.getResultDataTable(columnName);
+
             for (int i=0; i<Convert.ToInt64(count);i++)
             {
                 List<string> listofData = insertScripts(table, schema, tablename, i);
                 string query = listofData.Last();
                 String insertionStatus = insertData(query);
+                listofData.Add(insertionStatus);
+                Object[] data = listofData.ToArray();
+                resultData.Rows.Add(data);
             }
-            return tableData;
 
-
+            return resultData;
 
         }
 
