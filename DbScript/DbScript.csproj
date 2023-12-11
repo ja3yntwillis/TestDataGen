@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataGeneration\CaptureSheetData.cs" />
     <Compile Include="DataGeneration\GenerateRandomData.cs" />
     <Compile Include="DataGeneration\RandomDataGeneration.cs" />
     <Compile Include="Db\DatabaseConnection.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Reusables\Config.cs" />
     <Compile Include="Reusables\DataOps.cs" />
     <Compile Include="Reusables\ReadExcel.cs" />
+    <Compile Include="Reusables\WriteExcel.cs" />
     <Compile Include="Tool\Tool.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

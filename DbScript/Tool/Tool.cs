@@ -1,5 +1,6 @@
 ﻿using DbScript.Db;
 using DbScript.Reusables;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -31,7 +32,8 @@ namespace DbScript.Tool
                     {
                         case "INSERT":
                             DataTable dataStructure= ReadExcel.ExcelDataToDataTable(testfilepath, testfileSheet, true);
-                            Insert.performInsertion(dataStructure, table.Rows[i]["Schema"].ToString(), table.Rows[i]["Table"].ToString(), table.Rows[i]["Count"].ToString());
+                            DataTable dataOfInsert=Insert.performInsertion(dataStructure, table.Rows[i]["Schema"].ToString(), table.Rows[i]["Table"].ToString(), table.Rows[i]["Count"].ToString());
+                            WriteExcel.WriteDataToASheet("Insert", dataOfInsert, table.Rows[i]["Schema"].ToString(), table.Rows[i]["Table"].ToString());
                             break;
                         default: break;
 

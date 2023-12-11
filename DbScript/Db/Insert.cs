@@ -9,15 +9,16 @@ using System.Windows.Forms;
 using DbScript.DataGeneration;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Configuration;
+using TestDataGen.Reusables;
 
 namespace DbScript.Db
 {
     internal class Insert
     {
         DatabaseConnection dbConnectObj = new DatabaseConnection();
-        public static string insertionBase( string count, DataTable table,string schema,string tablename)
+        public static string insertionBase(  DataTable table,string schema,string tablename)
         {
-            int dataCount=Convert.ToInt32(count);
             string statement = "Insert into " + schema +"."+ tablename + " ( ";
             List<string> columns = DataOps.readDataTableByColumn("columnname", table);
             List<string> requiredforinsert = DataOps.readDataTableByColumn("requiredforinsert", table);
@@ -39,22 +40,36 @@ namespace DbScript.Db
 
             return statement;
         }
-        public static List<string> insertScripts(DataTable table, string schema, string tablename, string count)
+        public static List<string> insertScripts(DataTable table, string schema, string tablename, int loopindex)
         {
             string scripts = "";
             List<string> listofData = new List<string>();
-            string baseScripts = insertionBase(count, table,schema ,tablename);
+            string baseScripts = insertionBase(table,schema ,tablename);
             List<string> requiredforinsert = DataOps.readDataTableByColumn("requiredforinsert", table);
             List<string> type = DataOps.readDataTableByColumn("type", table);
             List<int> size = DataOps.readDataTableByColumn("size", table).ConvertAll(int.Parse);
             List<string> format = DataOps.readDataTableByColumn("format", table);
+            List<string> typeOfGen = DataOps.readDataTableByColumn("generationtechniqueinsert", table);
+            List<string> columnName = DataOps.readDataTableByColumn("columnname", table);
 
+            string insertFilePath = Config.getRootFolder() + "\\" + ConfigurationManager.AppSettings["dbfolder"] + "\\" + schema + "\\" + tablename + "\\" + ConfigurationManager.AppSettings["testdatasheet"];
+            string insertfileSheet = ConfigurationManager.AppSettings["insertsheetname"];
+            DataTable dataSet = ReadExcel.ExcelDataToDataTable(insertFilePath, insertfileSheet,true);
             string dataset = "";
             for (int i = 0; i < type.Count; i++)
             {
                 if (requiredforinsert[i].ToUpper().Trim() == "YES")
                 {
-                    string generatedData = GenerateRandomData.GetRandomData(type[i], size[i], format[i]);
+                    string generatedData = "";
+                    if (typeOfGen[i].ToUpper().Trim()=="RANDOM")
+                    {
+                        generatedData= GenerateRandomData.GetRandomData(type[i], size[i], format[i]);
+                    }
+                    if (typeOfGen[i].ToUpper().Trim()=="SHEET")
+                    {
+                        generatedData = CaptureSheetData.readDatafromSheet(columnName[i], dataSet,loopindex);
+                    }
+                        
                     listofData.Add(generatedData);
                     if (i != table.Rows.Count - 1)
                     {
@@ -117,16 +132,25 @@ namespace DbScript.Db
 
         public static DataTable performInsertion(DataTable table, string schema, string tablename, string count)
         {
-            DataTable tableData = null;
+
+            //Create Result dir to store result//
+            Config.createResultDir(schema, tablename);
+
+             //Prepare Dataset to add results
+            List<string> columnName = DataOps.readDataTableByColumn("columnname", table);
+            DataTable resultData = Config.getResultDataTable(columnName);
+
             for (int i=0; i<Convert.ToInt64(count);i++)
             {
-                List<string> listofData = insertScripts(table, schema, tablename, count);
+                List<string> listofData = insertScripts(table, schema, tablename, i);
                 string query = listofData.Last();
                 String insertionStatus = insertData(query);
+                listofData.Add(insertionStatus);
+                Object[] data = listofData.ToArray();
+                resultData.Rows.Add(data);
             }
-            return tableData;
 
-
+            return resultData;
 
         }
 
