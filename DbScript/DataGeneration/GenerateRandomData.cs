@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -36,28 +37,28 @@ namespace DbScript.DataGeneration
                     // [lowercasenumericwithspecialchar/uppercasenumericwithspecialchar/bothcasenumericwithspecialchar]
                     {
                         case "lowercase":
-                            result = RandomDataGeneration.RandomAlphabates(size, "lowercase");
+                            result = ConfigurationManager.AppSettings["QAidentifier"] +RandomDataGeneration.RandomAlphabates(size, "lowercase");
                             break;
                         case "uppercase":
-                            result = RandomDataGeneration.RandomAlphabates(size, "uppercase");
+                            result = ConfigurationManager.AppSettings["QAidentifier"] +RandomDataGeneration.RandomAlphabates(size, "uppercase");
                             break;
                         case "lowercasealphanumeric":
-                            result = RandomDataGeneration.RandomAlphanumericString(size, "lowercasealphanumeric");
+                            result = ConfigurationManager.AppSettings["QAidentifier"] + RandomDataGeneration.RandomAlphanumericString(size, "lowercasealphanumeric");
                             break;
                         case "uppercasealphanumeric":
-                            result = RandomDataGeneration.RandomAlphanumericString(size, "uppercasealphanumeric");
+                            result = ConfigurationManager.AppSettings["QAidentifier"] + RandomDataGeneration.RandomAlphanumericString(size, "uppercasealphanumeric");
                             break;
                         case "bothcasealphanumeric":
-                            result = RandomDataGeneration.RandomAlphanumericString(size, "bothcasealphanumeric");
+                            result = ConfigurationManager.AppSettings["QAidentifier"] + RandomDataGeneration.RandomAlphanumericString(size, "bothcasealphanumeric");
                             break;
                         case "lowercasenumericwithspecialchar":
-                            result = RandomDataGeneration.RandomAlphanumericWithSpecialChracterString(size, "lowercasenumericwithspecialchar");
+                            result = ConfigurationManager.AppSettings["QAidentifier"] + RandomDataGeneration.RandomAlphanumericWithSpecialChracterString(size, "lowercasenumericwithspecialchar");
                             break;
                         case "uppercasenumericwithspecialchar":
-                            result = RandomDataGeneration.RandomAlphanumericWithSpecialChracterString(size, "uppercasenumericwithspecialchar");
+                            result = ConfigurationManager.AppSettings["QAidentifier"] + RandomDataGeneration.RandomAlphanumericWithSpecialChracterString(size, "uppercasenumericwithspecialchar");
                             break;
                         case "bothcasenumericwithspecialchar":
-                            result = RandomDataGeneration.RandomAlphanumericWithSpecialChracterString(size, "bothcasenumericwithspecialchar");
+                            result = ConfigurationManager.AppSettings["QAidentifier"] +         RandomDataGeneration.RandomAlphanumericWithSpecialChracterString(size, "bothcasenumericwithspecialchar");
                             break;
 
 
@@ -74,8 +75,10 @@ namespace DbScript.DataGeneration
                case "date":
                     result = RandomDataGeneration.GetRandomDateTime(format);
                     break;
-                
 
+                case "guid":
+                    result = RandomDataGeneration.RandomGUID();
+                    break;
                 default: break;
 
             }

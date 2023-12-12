@@ -54,7 +54,11 @@ namespace DbScript.Db
 
             string insertFilePath = Config.getRootFolder() + "\\" + ConfigurationManager.AppSettings["dbfolder"] + "\\" + schema + "\\" + tablename + "\\" + ConfigurationManager.AppSettings["testdatasheet"];
             string insertfileSheet = ConfigurationManager.AppSettings["insertsheetname"];
-            DataTable dataSet = ReadExcel.ExcelDataToDataTable(insertFilePath, insertfileSheet,true);
+            DataTable dataSet =new DataTable();
+            if (typeOfGen.Any(item => item.Contains("Sheet")))
+            {
+                dataSet = ReadExcel.ExcelDataToDataTable(insertFilePath, insertfileSheet, true);
+            }
             string dataset = "";
             for (int i = 0; i < type.Count; i++)
             {

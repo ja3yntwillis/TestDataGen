@@ -236,6 +236,9 @@ namespace DbScript.DataGeneration
             int result = random.Next(0, 2);
             return result;
         }
-
+        public static string RandomGUID()
+        {
+            return Guid.NewGuid()+"";
+        }
     }
 }
