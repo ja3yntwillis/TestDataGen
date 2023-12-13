@@ -13,7 +13,10 @@ namespace DbScript.Reusables
     {
         public static void WriteDataToASheet(string sheetname,DataTable table,string schema,string tablename)
         {
-            string path=  Config.getRootFolder() + "\\" + ConfigurationManager.AppSettings["resultfolder"] + "\\" + schema + "\\" + tablename+"\\latest.xlsx";
+            string path=  Config.getRootFolder() + "\\" + ConfigurationManager.AppSettings["resultfolder"] + "\\" + schema + "\\" + tablename+"\\"+tablename+"_latest.xlsx";
+            DateTime currentDateTime = DateTime.Now;
+            string timestamp = currentDateTime.ToString("yyyyMMddHHmmss");
+            Config.RenameFile(path, tablename + "_Archive_"+ timestamp+".xlsx");
 
             using (ExcelPackage pck = new ExcelPackage(new System.IO.FileInfo(path)))
             {

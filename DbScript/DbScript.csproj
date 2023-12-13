@@ -71,6 +71,7 @@
     <Compile Include="DataGeneration\RandomDataGeneration.cs" />
     <Compile Include="Db\DatabaseConnection.cs" />
     <Compile Include="Db\Insert.cs" />
+    <Compile Include="Db\Select.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -55,11 +55,18 @@ namespace DbScript.DataGeneration
 
         // Generate Random Floating Point Number Between 0 and 1
         // Returns a random float value between 0 and 1
-        public static float RandomFloatingNumber(int length)
+        public static double RandomFloatingNumber(int length)
         {
-            float randomFloat = (float)random.NextDouble();
-            double finalResult = Math.Round(randomFloat, length);
-            return (float)finalResult;
+            if (length < 1)
+            {
+                throw new ArgumentException("Length must be greater than or equal to 1", nameof(length));
+            }
+
+            Random random = new Random();
+            double minValue = Math.Pow(10, length - 1);
+            double maxValue = Math.Pow(10, length);
+
+            return random.NextDouble() * (maxValue - minValue) + minValue;
         }
 
         // Generate Random Floating Point Number Without a Range
@@ -173,8 +180,11 @@ namespace DbScript.DataGeneration
         // Generates a Random Date Value With a Given Format (e.g.- ("yyyy-mm-dd HH:mm:ss.ff"), ("yyyy-mm-dd"))
         public static String GetRandomDateTime(string outputdateformat)
         {
-            var mydate = DateTime.Now.AddDays(new Random().Next(1000));
-            return mydate.ToString(outputdateformat);
+            Random random = new Random();
+            int days = random.Next(0, 365 * 10);
+            DateTime currentDate = DateTime.Now;
+            DateTime randomDate = currentDate.AddDays(-days);
+            return randomDate.ToString(outputdateformat);
         }
 
         // Generates a random alphanumeric + Special Character string with a given size

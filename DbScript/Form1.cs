@@ -55,5 +55,10 @@ namespace DbScript
         {
             Tool.Tool.StartTool();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Tool.Tool.CreateStructure();
+        }
     }
 }

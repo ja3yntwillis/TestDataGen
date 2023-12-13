@@ -60,8 +60,6 @@ namespace DbScript.DataGeneration
                         case "bothcasenumericwithspecialchar":
                             result = ConfigurationManager.AppSettings["QAidentifier"] +         RandomDataGeneration.RandomAlphanumericWithSpecialChracterString(size, "bothcasenumericwithspecialchar");
                             break;
-
-
                     }
                     break;
                 case "boolean":
