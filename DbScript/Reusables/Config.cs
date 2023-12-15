@@ -32,6 +32,22 @@ namespace DbScript.Reusables
             System.IO.Directory.CreateDirectory(schemapath);
             System.IO.Directory.CreateDirectory(tablepath);
         }
+        public static DataTable createHeaders(DataTable dataTable) {
+
+            dataTable.Columns.Add("columnname", typeof(string));
+            dataTable.Columns.Add("isIdentity", typeof(string));
+            dataTable.Columns.Add("type", typeof(string));
+            dataTable.Columns.Add("size", typeof(string));
+            dataTable.Columns.Add("format", typeof(string));
+            dataTable.Columns.Add("requiredforinsert", typeof(string));
+            dataTable.Columns.Add("generationtechniqueinsert", typeof(string));
+            dataTable.Columns.Add("requiredforupdate", typeof(string));
+            dataTable.Columns.Add("updatebasedon", typeof(string));
+            dataTable.Columns.Add("generationtechniqueUpdate", typeof(string));
+            dataTable.Columns.Add("requiredfordelete", typeof(string));
+
+            return dataTable;
+        }
         public static DataTable getResultDataTable(List<string> columnName) {
             DataTable resultData = new DataTable();
             for (int j = 0; j < columnName.Count; j++)

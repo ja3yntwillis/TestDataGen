@@ -24,12 +24,15 @@ namespace DbScript.Tool
             {
                 var required = table.Rows[i]["Required"].ToString();
 
-                if (required == "Yes")
+                if (required.ToUpper().Trim() == "YES")
                 {
                     Config.createStructureDir(table.Rows[i]["Schema"].ToString(), table.Rows[i]["Table"].ToString());
-                    string query = "SELECT COLUMN_NAME, CASE WHEN COLUMNPROPERTY(OBJECT_ID(TABLE_SCHEMA + '.' + TABLE_NAME), COLUMN_NAME, 'IsIdentity') = 1 THEN 'YES' ELSE 'NO' END AS IS_IDENTITY,DATA_TYPE,CASE WHEN IS_NULLABLE = 'NO' THEN 'YES' WHEN IS_NULLABLE = 'YES' THEN 'NO' ELSE IS_NULLABLE END AS required FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA '"+ table.Rows[i]["Schema"].ToString() + "' AND TABLE_NAME = '"+ table.Rows[i]["Table"].ToString()+"'";
+                    string query = "SELECT COLUMN_NAME as columnname, CASE WHEN COLUMNPROPERTY(OBJECT_ID(TABLE_SCHEMA + '.' + TABLE_NAME), COLUMN_NAME, 'IsIdentity') = 1 THEN 'YES' ELSE 'NO' END AS isidentity,DATA_TYPE as type, '' as size,'' as format ,CASE WHEN IS_NULLABLE = 'NO' THEN 'YES' WHEN IS_NULLABLE = 'YES' THEN 'NO' ELSE IS_NULLABLE END AS requiredforinsert,'Random' as generationtechniqueinsert, 'No' as requiredforupdate,'' as updatebasedon,'Random' as generationtechniqueupdate,'No' as requiredfordelete FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA ='" + table.Rows[i]["Schema"].ToString() + "' AND TABLE_NAME = '"+ table.Rows[i]["Table"].ToString()+ "' order by requiredforinsert desc";
+                    DataTable structure=new DataTable();
+                    //structure= Config.createHeaders(structure);
+                    structure=Select.getDataByQuery(query);
+                    WriteExcel.WriteStructureToASheet(ConfigurationManager.AppSettings["tablefilename"], structure, table.Rows[i]["Schema"].ToString(), table.Rows[i]["Table"].ToString());
 
-                    Select.executeSelectQuery(query);
 
                 }
             }
@@ -53,7 +56,7 @@ namespace DbScript.Tool
                         case "INSERT":
                             DataTable dataStructure= ReadExcel.ExcelDataToDataTable(testfilepath, testfileSheet, true);
                             DataTable dataOfInsert=Insert.performInsertion(dataStructure, table.Rows[i]["Schema"].ToString(), table.Rows[i]["Table"].ToString(), table.Rows[i]["Count"].ToString());
-                            WriteExcel.WriteDataToASheet("Insert", dataOfInsert, table.Rows[i]["Schema"].ToString(), table.Rows[i]["Table"].ToString());
+                            WriteExcel.WriteResultDataToASheet("Insert", dataOfInsert, table.Rows[i]["Schema"].ToString(), table.Rows[i]["Table"].ToString());
                             break;
                         default: break;
 
