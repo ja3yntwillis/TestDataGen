@@ -397,4 +397,18 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 /DbScript/Result
+/DbScript/dbConfig
 /DbScript/Config.xlsx
+/DbScript/dbConfig/dbo/carrier/structure.xlsx
+/DbScript/dbConfig/dbo/carrier/testdata.xlsx
+/DbScript/dbConfig/dbo/Person/structure.xlsx
+/DbScript/dbConfig/dbo/personPolicyMap/structure.xlsx
+/DbScript/dbConfig/dbo/personPolicyMap/testdata.xlsx
+/DbScript/dbConfig/dbo/Plan/structure.xlsx
+/DbScript/dbConfig/dbo/Plan/testdata.xlsx
+/DbScript/dbConfig/dbo/policy/structure.xlsx
+/DbScript/dbConfig/dbo/policy/testdata.xlsx
+/DbScript/dbConfig/dbo/PolicyTerms/structure.xlsx
+/DbScript/dbConfig/dbo/quote/structure.xlsx
+/DbScript/dbConfig/Enrollment/PersonNameActual/structure.xlsx
+/DbScript/dbConfig/Enrollment/PersonNameActual/testdata.xlsx
