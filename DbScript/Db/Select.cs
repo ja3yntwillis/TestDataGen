@@ -1,23 +1,32 @@
-﻿using System;
+﻿using DbScript.Reusables;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DbScript.Db
 {
     internal class Select
     {
+        static string databaseserver = ConfigurationManager.AppSettings["databaseserver"];
+        public static string dbName = ConfigurationManager.AppSettings["dbName"];
+        static string authtype = ConfigurationManager.AppSettings["authtype"];
+        static string user = ConfigurationManager.AppSettings["user"];
+        static string password = ConfigurationManager.AppSettings["password"];
+        static string DbServer = ConfigurationManager.AppSettings["DbServer"];
         public static DataTable getDataByQuery(string Query)
         {
             DataTable dataTable = new DataTable();
             try
             {
-                
-                using (SqlConnection connection = DatabaseConnection.Connection)
+                 SqlConnection Connection = DatabaseConnection.getConnectionStringForSQLServer(databaseserver, dbName, authtype, user, password, DbServer);
+                using (SqlConnection connection = Connection)
                 {
                     connection.Open();
                     using (SqlDataAdapter adapter = new SqlDataAdapter(Query, connection))
