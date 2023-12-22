@@ -54,12 +54,10 @@ namespace DbScript.Db
             List<string> listofData = new List<string>();
             string baseScripts = insertionBase(table,schema ,tablename);
             List<string> requiredforinsert = DataOps.readDataTableByColumn("requiredforinsert", table);
-            List<string> type = DataOps.readDataTableByColumn("type", table);
-            List<int> size = DataOps.readDataTableByColumn("size", table).ConvertAll(int.Parse);
-            List<string> format = DataOps.readDataTableByColumn("format", table);
-            List<string> typeOfGen = DataOps.readDataTableByColumn("generationtechniqueinsert", table);
+             List<string> typeOfGen = DataOps.readDataTableByColumn("generationtechniqueinsert", table);
             List<string> columnName = DataOps.readDataTableByColumn("columnname", table);
             List<string> IsIdentity = DataOps.readDataTableByColumn("IsIdentity", table);
+            List<string> type = DataOps.readDataTableByColumn("type", table);
 
             string insertFilePath = Config.getRootFolder() + "\\" + ConfigurationManager.AppSettings["dbfolder"] + "\\" + schema + "\\" + tablename + "\\" + ConfigurationManager.AppSettings["testdatasheet"];
             string insertfileSheet = ConfigurationManager.AppSettings["insertsheetname"];
@@ -69,7 +67,7 @@ namespace DbScript.Db
                 dataSet = ReadExcel.ExcelDataToDataTable(insertFilePath, insertfileSheet, true);
             }
             string dataset = "";
-            for (int i = 0; i < type.Count; i++)
+            for (int i = 0; i < columnName.Count; i++)
             {
                 if (requiredforinsert[i].ToUpper().Trim() == "YES")
                 {
@@ -78,6 +76,10 @@ namespace DbScript.Db
                         string generatedData = "";
                         if (typeOfGen[i].ToUpper().Trim() == "RANDOM")
                         {
+                            
+                            List<int> size = DataOps.readDataTableByColumn("size", table).ConvertAll(int.Parse);
+                            List<string> format = DataOps.readDataTableByColumn("format", table);
+
                             generatedData = GenerateRandomData.GetRandomData(type[i], size[i], format[i]);
                         }
                         if (typeOfGen[i].ToUpper().Trim() == "SHEET")
