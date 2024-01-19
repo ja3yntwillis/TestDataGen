@@ -71,6 +71,7 @@ namespace scrprnt
                     picture.Height = 250;
                     picture.Width = 450;
                     Paragraph p1 = doc.InsertParagraph();
+                    p1.Italic().AppendLine((string)dt.Rows[i]["filename"]);
                     p1.Italic().AppendLine((string)dt.Rows[i]["time"]);
                     p1.Italic().AppendLine("Comments : " + (string)dt.Rows[i]["comment"]);
                     p1.AppendPicture(picture);
@@ -119,6 +120,7 @@ namespace scrprnt
                     picture.Height = 250;
                     picture.Width = 450;
                     Paragraph p1 = doc.InsertParagraph();
+                    p1.Italic().AppendLine((string)dt.Rows[i]["filename"]);
                     p1.Italic().AppendLine((string)dt.Rows[i]["time"]);
                     p1.Italic().AppendLine("Comments : " + (string)dt.Rows[i]["comment"]);
                     p1.AppendPicture(picture);
