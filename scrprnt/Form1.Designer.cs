@@ -37,6 +37,7 @@
             label2 = new Label();
             button5 = new Button();
             button6 = new Button();
+            linkLabel1 = new LinkLabel();
             SuspendLayout();
             // 
             // button1
@@ -55,7 +56,7 @@
             button2.BackgroundImage = Properties.Resources.word;
             button2.BackgroundImageLayout = ImageLayout.None;
             button2.Enabled = false;
-            button2.Location = new Point(180, 196);
+            button2.Location = new Point(180, 184);
             button2.Name = "button2";
             button2.Size = new Size(96, 89);
             button2.TabIndex = 1;
@@ -105,7 +106,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(26, 226);
+            label2.Location = new Point(26, 214);
             label2.Name = "label2";
             label2.Size = new Size(132, 25);
             label2.TabIndex = 6;
@@ -116,7 +117,7 @@
             button5.BackgroundImage = Properties.Resources.pdf;
             button5.BackgroundImageLayout = ImageLayout.None;
             button5.Enabled = false;
-            button5.Location = new Point(294, 196);
+            button5.Location = new Point(294, 184);
             button5.Name = "button5";
             button5.Size = new Size(96, 89);
             button5.TabIndex = 7;
@@ -128,12 +129,23 @@
             button6.BackgroundImage = Properties.Resources.zipped;
             button6.BackgroundImageLayout = ImageLayout.None;
             button6.Enabled = false;
-            button6.Location = new Point(404, 196);
+            button6.Location = new Point(404, 184);
             button6.Name = "button6";
             button6.Size = new Size(93, 89);
             button6.TabIndex = 8;
             button6.UseVisualStyleBackColor = true;
             button6.Click += button6_Click;
+            // 
+            // linkLabel1
+            // 
+            linkLabel1.AutoSize = true;
+            linkLabel1.Location = new Point(35, 280);
+            linkLabel1.Name = "linkLabel1";
+            linkLabel1.Size = new Size(432, 20);
+            linkLabel1.TabIndex = 9;
+            linkLabel1.TabStop = true;
+            linkLabel1.Text = "Click here to open the result folder - This contains (docx,pdf,zip)";
+            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
             // 
             // Form1
             // 
@@ -141,6 +153,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(522, 309);
+            Controls.Add(linkLabel1);
             Controls.Add(button6);
             Controls.Add(button5);
             Controls.Add(label2);
@@ -150,6 +163,7 @@
             Controls.Add(label1);
             Controls.Add(button2);
             Controls.Add(button1);
+            MaximizeBox = false;
             MaximumSize = new Size(540, 356);
             Name = "Form1";
             Text = "Capture Screenshot";
@@ -169,5 +183,6 @@
         private Label label2;
         private Button button5;
         private Button button6;
+        private LinkLabel linkLabel1;
     }
 }

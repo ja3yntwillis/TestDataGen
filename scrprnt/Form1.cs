@@ -19,6 +19,13 @@ namespace scrprnt
         public Form1()
         {
             InitializeComponent();
+            System.Windows.Forms.ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
+            ToolTip1.SetToolTip(this.button1, "Take Screenshot");
+            ToolTip1.SetToolTip(this.button2, "Export Result to Doc");
+            ToolTip1.SetToolTip(this.button3, "Reset");
+            ToolTip1.SetToolTip(this.button4, "Use microphone to speak");
+            ToolTip1.SetToolTip(this.button5, "Export Result to PDF");
+            ToolTip1.SetToolTip(this.button6, "Export Screenshots to Zip");
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -140,7 +147,7 @@ namespace scrprnt
             string currentDate = DateTime.Now.ToString("MMddyyyyHHmmss");
             string outputPath = $"result\\Result_{currentDate}.zip";
             StreamWriter sw = new StreamWriter(@"screenshot\\comments.csv", false);
-            
+
             for (int i = 0; i < dt.Columns.Count; i++)
             {
                 sw.Write(dt.Columns[i]);
@@ -185,6 +192,11 @@ namespace scrprnt
             string message = "Screenshots are zipped and saved at Result folder with comments in csv";
 
             MessageBox.Show(message, "MessageBox Title", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("explorer.exe","\\result");
         }
     }
 }
