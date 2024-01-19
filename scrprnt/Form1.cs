@@ -65,12 +65,13 @@ namespace scrprnt
 
                 for (int i = 0; i < imageFiles.Length; i++)
                 {
-                    var filename = "screenshot\\screenshot_"+(i+1)+".png";
+                    var filename = "screenshot\\"+(string)dt.Rows[i]["filename"];
                     Xceed.Document.NET.Image image = doc.AddImage(filename);
                     Picture picture = image.CreatePicture();
                     picture.Height = 250;
                     picture.Width = 450;
                     Paragraph p1 = doc.InsertParagraph();
+                    p1.Italic().AppendLine((string)dt.Rows[i]["filename"]);
                     p1.Italic().AppendLine((string)dt.Rows[i]["time"]);
                     p1.Italic().AppendLine("Comments : " + (string)dt.Rows[i]["comment"]);
                     p1.AppendPicture(picture);
@@ -113,12 +114,13 @@ namespace scrprnt
 
                 for (int i = 0; i < imageFiles.Length; i++)
                 {
-                    var filename = "screenshot\\screenshot_" + (i + 1) + ".png";
+                    var filename = "screenshot\\"+(string)dt.Rows[i]["filename"];
                     Xceed.Document.NET.Image image = doc.AddImage(filename);
                     Picture picture = image.CreatePicture();
                     picture.Height = 250;
                     picture.Width = 450;
                     Paragraph p1 = doc.InsertParagraph();
+                    p1.Italic().AppendLine((string)dt.Rows[i]["filename"]);
                     p1.Italic().AppendLine((string)dt.Rows[i]["time"]);
                     p1.Italic().AppendLine("Comments : " + (string)dt.Rows[i]["comment"]);
                     p1.AppendPicture(picture);
