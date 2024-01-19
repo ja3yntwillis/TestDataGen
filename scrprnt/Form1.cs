@@ -65,7 +65,7 @@ namespace scrprnt
 
                 for (int i = 0; i < imageFiles.Length; i++)
                 {
-                    var filename = imageFiles[i];
+                    var filename = "screenshot\\screenshot_"+(i+1)+".png";
                     Xceed.Document.NET.Image image = doc.AddImage(filename);
                     Picture picture = image.CreatePicture();
                     picture.Height = 250;
@@ -113,7 +113,7 @@ namespace scrprnt
 
                 for (int i = 0; i < imageFiles.Length; i++)
                 {
-                    var filename = imageFiles[i];
+                    var filename = "screenshot\\screenshot_" + (i + 1) + ".png";
                     Xceed.Document.NET.Image image = doc.AddImage(filename);
                     Picture picture = image.CreatePicture();
                     picture.Height = 250;
