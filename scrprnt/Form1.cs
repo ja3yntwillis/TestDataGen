@@ -84,6 +84,7 @@ namespace scrprnt
                 button2.Enabled = false;
                 button5.Enabled = false;
                 button6.Enabled = false;
+                textBox1.Clear();
                 string message = "Screenshot Document saved at Result folder.";
 
                 MessageBox.Show(message, "MessageBox Title", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -135,6 +136,7 @@ namespace scrprnt
                 button2.Enabled = false;
                 button5.Enabled = false;
                 button6.Enabled = false;
+                textBox1.Clear();
                 string message = "Screenshot PDF saved at Result folder.";
 
                 MessageBox.Show(message, "MessageBox Title", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -189,6 +191,7 @@ namespace scrprnt
             button2.Enabled = false;
             button5.Enabled = false;
             button6.Enabled = false;
+            textBox1.Clear();
             string message = "Screenshots are zipped and saved at Result folder with comments in csv";
 
             MessageBox.Show(message, "MessageBox Title", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -196,7 +199,7 @@ namespace scrprnt
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("explorer.exe","\\result");
+            System.Diagnostics.Process.Start("explorer.exe",@"result");
         }
     }
 }
