@@ -1,14 +1,14 @@
 using Microsoft.Office.Interop.Word;
-using Spire.Doc;
+using Microsoft.VisualBasic;
 using System.Data;
 using System.IO.Compression;
 using System.Reflection.Metadata;
 using System.Xml.Linq;
 using Xceed.Document.NET;
 using Xceed.Words.NET;
-using Document = Spire.Doc.Document;
 using Paragraph = Xceed.Document.NET.Paragraph;
 using Word = Microsoft.Office.Interop.Word;
+
 
 namespace scrprnt
 {
@@ -128,9 +128,25 @@ namespace scrprnt
                 }
 
                 doc.Save();
-                Document document = new Document();
-                document.LoadFromFile(outputPath);
-                document.SaveToFile(outputPathPDF, FileFormat.PDF);
+                var wordApp = new Word.Application();
+                try
+                {
+                    var path = AppDomain.CurrentDomain.BaseDirectory;
+                    var docs = wordApp.Documents.Open(path+outputPath);
+
+                    docs.SaveAs2(path+outputPathPDF, WdSaveFormat.wdFormatPDF);
+                    docs.Close();
+                    wordApp.Quit();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                    var a=ex.Message;
+                }
+                finally
+                {
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(wordApp);
+                }
                 File.Delete(outputPath);
                 Program.DeleteAllFilesInFolder(folderPath);
                 dt.Rows.Clear();
