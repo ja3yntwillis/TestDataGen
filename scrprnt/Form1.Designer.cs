@@ -165,7 +165,9 @@
             Controls.Add(button1);
             MaximizeBox = false;
             MaximumSize = new Size(540, 356);
+            MinimumSize = new Size(540, 356);
             Name = "Form1";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Capture Screenshot";
             TopMost = true;
             ResumeLayout(false);
