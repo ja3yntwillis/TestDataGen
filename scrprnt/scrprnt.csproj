@@ -21,10 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DocX" Version="2.5.0" />
-    <PackageReference Include="FreeSpire.Doc" Version="11.6.0" />
-    <PackageReference Include="Microsoft.Office.Interop.Word" Version="15.0.4797.1004" />
-  </ItemGroup>
+    <PackageReference Include="DocX" Version="2.5.0" />  </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
