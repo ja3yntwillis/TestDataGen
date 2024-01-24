@@ -101,6 +101,7 @@
             button4.Size = new Size(40, 40);
             button4.TabIndex = 5;
             button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
             // 
             // label2
             // 

@@ -8,6 +8,7 @@ using Xceed.Document.NET;
 using Xceed.Words.NET;
 using Paragraph = Xceed.Document.NET.Paragraph;
 using Word = Microsoft.Office.Interop.Word;
+using Microsoft.CognitiveServices.Speech;
 
 
 namespace scrprnt
@@ -65,7 +66,7 @@ namespace scrprnt
 
                 for (int i = 0; i < imageFiles.Length; i++)
                 {
-                    var filename = "screenshot\\"+(string)dt.Rows[i]["filename"];
+                    var filename = "screenshot\\" + (string)dt.Rows[i]["filename"];
                     Xceed.Document.NET.Image image = doc.AddImage(filename);
                     Picture picture = image.CreatePicture();
                     picture.Height = 250;
@@ -114,7 +115,7 @@ namespace scrprnt
 
                 for (int i = 0; i < imageFiles.Length; i++)
                 {
-                    var filename = "screenshot\\"+(string)dt.Rows[i]["filename"];
+                    var filename = "screenshot\\" + (string)dt.Rows[i]["filename"];
                     Xceed.Document.NET.Image image = doc.AddImage(filename);
                     Picture picture = image.CreatePicture();
                     picture.Height = 250;
@@ -132,16 +133,16 @@ namespace scrprnt
                 try
                 {
                     var path = AppDomain.CurrentDomain.BaseDirectory;
-                    var docs = wordApp.Documents.Open(path+outputPath);
+                    var docs = wordApp.Documents.Open(path + outputPath);
 
-                    docs.SaveAs2(path+outputPathPDF, WdSaveFormat.wdFormatPDF);
+                    docs.SaveAs2(path + outputPathPDF, WdSaveFormat.wdFormatPDF);
                     docs.Close();
                     wordApp.Quit();
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error: " + ex.Message);
-                    var a=ex.Message;
+                    var a = ex.Message;
                 }
                 finally
                 {
@@ -217,7 +218,27 @@ namespace scrprnt
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("explorer.exe",@"result");
+            System.Diagnostics.Process.Start("explorer.exe", @"result");
+        }
+
+        private async void button4_Click(object sender, EventArgs e)
+        {
+
+            string subscriptionKey = "8b95d319701a40b096c963f225f8d5cc";
+            string serviceRegion = "centralindia";
+            var speechConfig = SpeechConfig.FromSubscription(subscriptionKey, serviceRegion);
+            var speechRecognizer = new SpeechRecognizer(speechConfig);
+            var speechSynthesizer = new SpeechSynthesizer(speechConfig);
+            await speechSynthesizer.SpeakTextAsync("Hello, please speak now.");
+            var result = await speechRecognizer.RecognizeOnceAsync();
+            if (result.Reason == ResultReason.RecognizedSpeech)
+            {
+                string recognizedText = result.Text;
+                textBox1.Text= recognizedText;
+                 MessageBox.Show($"Recognized Text: {recognizedText}", "Speech Recognition Result");
+            }
+           
         }
     }
+    
 }
