@@ -224,8 +224,8 @@ namespace scrprnt
         private async void button4_Click(object sender, EventArgs e)
         {
 
-            string subscriptionKey = "8b95d319701a40b096c963f225f8d5cc";
-            string serviceRegion = "centralindia";
+            string subscriptionKey = Cred.subscriptionKey;
+            string serviceRegion = Cred.serviceRegion;
             var speechConfig = SpeechConfig.FromSubscription(subscriptionKey, serviceRegion);
             var speechRecognizer = new SpeechRecognizer(speechConfig);
             var speechSynthesizer = new SpeechSynthesizer(speechConfig);
@@ -235,7 +235,7 @@ namespace scrprnt
             {
                 string recognizedText = result.Text;
                 textBox1.Text= recognizedText;
-                 MessageBox.Show($"Recognized Text: {recognizedText}", "Speech Recognition Result");
+                await speechSynthesizer.SpeakTextAsync("you , just said."+recognizedText);
             }
            
         }
