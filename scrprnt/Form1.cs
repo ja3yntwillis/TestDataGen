@@ -9,6 +9,7 @@ using Xceed.Words.NET;
 using Paragraph = Xceed.Document.NET.Paragraph;
 using Word = Microsoft.Office.Interop.Word;
 using Microsoft.CognitiveServices.Speech;
+using Timer = System.Windows.Forms.Timer;
 
 
 namespace scrprnt
@@ -16,7 +17,7 @@ namespace scrprnt
     public partial class Form1 : Form
     {
         System.Data.DataTable dt = new System.Data.DataTable();
-
+        private Timer yourTimer;
         public Form1()
         {
             InitializeComponent();
@@ -27,8 +28,34 @@ namespace scrprnt
             ToolTip1.SetToolTip(this.button4, "Use microphone to speak");
             ToolTip1.SetToolTip(this.button5, "Export Result to PDF");
             ToolTip1.SetToolTip(this.button6, "Export Screenshots to Zip");
+            yourTimer = new Timer();
+            yourTimer.Interval = 5000; // Interval in milliseconds (5 seconds)
+           
         }
-
+        private async void YourTimer_Tick(object sender, EventArgs e)
+        {
+            string subscriptionKey = Cred.subscriptionKey;
+            string serviceRegion = Cred.serviceRegion;
+            var speechConfig = SpeechConfig.FromSubscription(subscriptionKey, serviceRegion);
+            var speechRecognizer = new SpeechRecognizer(speechConfig);
+            var speechSynthesizer = new SpeechSynthesizer(speechConfig);
+            var result = await speechRecognizer.RecognizeOnceAsync();
+            if (result.Reason == ResultReason.RecognizedSpeech)
+            {
+                string recognizedText = result.Text;
+                string text_withoutChars = Program.RemoveSpecialCharacters(recognizedText);
+                if (text_withoutChars.ToUpper() == "ADDCOMMENT")
+                {
+                    textBox1.Clear();
+                    textBox1.Text = recognizedText;
+                }
+                if (text_withoutChars.ToUpper() == "CLICKSCREENSHOT")
+                {
+                   button1.PerformClick();
+                }
+                //await speechSynthesizer.SpeakTextAsync("you , just said."+recognizedText);
+            }
+        }
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -229,13 +256,32 @@ namespace scrprnt
             var speechConfig = SpeechConfig.FromSubscription(subscriptionKey, serviceRegion);
             var speechRecognizer = new SpeechRecognizer(speechConfig);
             var speechSynthesizer = new SpeechSynthesizer(speechConfig);
-            await speechSynthesizer.SpeakTextAsync("Hello, please speak now.");
+            await speechSynthesizer.SpeakTextAsync("Pixie is about to start ");
             var result = await speechRecognizer.RecognizeOnceAsync();
+
             if (result.Reason == ResultReason.RecognizedSpeech)
             {
                 string recognizedText = result.Text;
-                textBox1.Text= recognizedText;
-                await speechSynthesizer.SpeakTextAsync("you , just said."+recognizedText);
+                string text_withoutChars = Program.RemoveSpecialCharacters(recognizedText);
+                
+                if (text_withoutChars.ToUpper() == "HIPIXIE")
+                {
+                    await speechSynthesizer.SpeakTextAsync("Hello,how may I assist you");
+                    if (yourTimer.Enabled == false)
+                    {
+                        yourTimer.Tick += YourTimer_Tick;
+                        yourTimer.Enabled = true;
+                    }
+                    //button1.PerformClick();
+                   
+                }
+                if (text_withoutChars.ToUpper() == "ADDCOMMENT")
+                {
+                    textBox1.Clear();
+
+                    textBox1.Text = recognizedText;
+                }
+                //await speechSynthesizer.SpeakTextAsync("you , just said."+recognizedText);
             }
            
         }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             button1 = new Button();
             button2 = new Button();
             label1 = new Label();
@@ -38,6 +39,7 @@
             button5 = new Button();
             button6 = new Button();
             linkLabel1 = new LinkLabel();
+            pixieText = new Label();
             SuspendLayout();
             // 
             // button1
@@ -148,12 +150,25 @@
             linkLabel1.Text = "Click here to open the result folder - This contains (docx,pdf,zip)";
             linkLabel1.LinkClicked += linkLabel1_LinkClicked;
             // 
+            // pixieText
+            // 
+            pixieText.AutoSize = true;
+            pixieText.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            pixieText.Location = new Point(35, 9);
+            pixieText.Name = "pixieText";
+            pixieText.Size = new Size(437, 20);
+            pixieText.TabIndex = 10;
+            pixieText.Text = "Activate Pixie by saying \"Hi Pixie\" to initiate your conversation";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
+            BackgroundImage = Properties.Resources.duck_21863;
+            BackgroundImageLayout = ImageLayout.None;
             ClientSize = new Size(522, 309);
+            Controls.Add(pixieText);
             Controls.Add(linkLabel1);
             Controls.Add(button6);
             Controls.Add(button5);
@@ -164,12 +179,14 @@
             Controls.Add(label1);
             Controls.Add(button2);
             Controls.Add(button1);
+            DoubleBuffered = true;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MaximumSize = new Size(540, 356);
             MinimumSize = new Size(540, 356);
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Capture Screenshot";
+            Text = "Pixie";
             TopMost = true;
             ResumeLayout(false);
             PerformLayout();
@@ -187,5 +204,6 @@
         private Button button5;
         private Button button6;
         private LinkLabel linkLabel1;
+        private Label pixieText;
     }
 }
