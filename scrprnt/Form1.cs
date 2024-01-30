@@ -44,14 +44,24 @@ namespace scrprnt
             {
                 string recognizedText = result.Text;
                 string text_withoutChars = Program.RemoveSpecialCharacters(recognizedText);
+
+                if (text_withoutChars.ToUpper() == "HIPIXIE")
+                {
+                    await speechSynthesizer.SpeakTextAsync("Hello,how may I assist you");
+                }
                 if (text_withoutChars.ToUpper() == "ADDCOMMENT")
                 {
+                    await speechSynthesizer.SpeakTextAsync("Hello,how may I assist you");
                     textBox1.Clear();
-                    textBox1.Text = recognizedText;
+                    //Incomplete
+                    textBox1.Text = "Yet to Implement";
+                    await speechSynthesizer.SpeakTextAsync("I am yet to be implemented");
                 }
                 if (text_withoutChars.ToUpper() == "CLICKSCREENSHOT")
                 {
-                   button1.PerformClick();
+                    await speechSynthesizer.SpeakTextAsync("Sure , please wait while I am capturing it");
+                    button1.PerformClick();
+                    await speechSynthesizer.SpeakTextAsync("Captured Screenshot");
                 }
                 //await speechSynthesizer.SpeakTextAsync("you , just said."+recognizedText);
             }
@@ -280,6 +290,10 @@ namespace scrprnt
                     textBox1.Clear();
 
                     textBox1.Text = recognizedText;
+                }
+                else
+                {
+                    await speechSynthesizer.SpeakTextAsync("I heard"+recognizedText);
                 }
                 //await speechSynthesizer.SpeakTextAsync("you , just said."+recognizedText);
             }
