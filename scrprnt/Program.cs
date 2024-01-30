@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 namespace scrprnt
 {
     internal static class Program
@@ -59,6 +61,16 @@ namespace scrprnt
             }
 
             return fileName;
+        }
+        public static string RemoveSpecialCharacters(string input)
+        {
+            // Define the regular expression pattern for special characters
+            string pattern = "[^a-zA-Z0-9]";
+
+            // Replace special characters with an empty string
+            string result = Regex.Replace(input, pattern, "");
+
+            return result;
         }
     }
 }
