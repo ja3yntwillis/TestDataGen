@@ -97,8 +97,8 @@
             // button4
             // 
             button4.BackgroundImage = Properties.Resources.microphone;
-            button4.BackgroundImageLayout = ImageLayout.None;
-            button4.Location = new Point(341, 111);
+            button4.BackgroundImageLayout = ImageLayout.Center;
+            button4.Location = new Point(339, 111);
             button4.Name = "button4";
             button4.Size = new Size(40, 40);
             button4.TabIndex = 5;

@@ -18,6 +18,9 @@ namespace scrprnt
     {
         System.Data.DataTable dt = new System.Data.DataTable();
         private Timer yourTimer;
+        
+        
+
         public Form1()
         {
             InitializeComponent();
@@ -51,11 +54,14 @@ namespace scrprnt
                 }
                 if (text_withoutChars.ToUpper() == "ADDCOMMENT")
                 {
-                    await speechSynthesizer.SpeakTextAsync("Hello,how may I assist you");
                     textBox1.Clear();
-                    //Incomplete
-                    textBox1.Text = "Yet to Implement";
-                    await speechSynthesizer.SpeakTextAsync("I am yet to be implemented");
+                    await speechSynthesizer.SpeakTextAsync("Sure, Please tell me what should I add as Comment");
+                    var cmnt = await speechRecognizer.RecognizeOnceAsync();
+                    if (result.Reason == ResultReason.RecognizedSpeech)
+                    {
+                        var recognizedComment = cmnt.Text;
+                        textBox1.Text = recognizedComment;
+                    }
                 }
                 if (text_withoutChars.ToUpper() == "CLICKSCREENSHOT")
                 {
@@ -63,8 +69,7 @@ namespace scrprnt
                     button1.PerformClick();
                     await speechSynthesizer.SpeakTextAsync("Captured Screenshot");
                 }
-                //await speechSynthesizer.SpeakTextAsync("you , just said."+recognizedText);
-            }
+                }
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -266,6 +271,7 @@ namespace scrprnt
             var speechConfig = SpeechConfig.FromSubscription(subscriptionKey, serviceRegion);
             var speechRecognizer = new SpeechRecognizer(speechConfig);
             var speechSynthesizer = new SpeechSynthesizer(speechConfig);
+
             await speechSynthesizer.SpeakTextAsync("Pixie is about to start ");
             var result = await speechRecognizer.RecognizeOnceAsync();
 
@@ -282,20 +288,25 @@ namespace scrprnt
                         yourTimer.Tick += YourTimer_Tick;
                         yourTimer.Enabled = true;
                     }
-                    //button1.PerformClick();
+
                    
                 }
                 if (text_withoutChars.ToUpper() == "ADDCOMMENT")
                 {
                     textBox1.Clear();
+                    await speechSynthesizer.SpeakTextAsync("Sure, Please tell me what should I add as Comment");
+                    var cmnt = await speechRecognizer.RecognizeOnceAsync();
+                    if (result.Reason == ResultReason.RecognizedSpeech)
+                    {
+                        var recognizedComment = cmnt.Text;
+                        textBox1.Text = recognizedComment;
+                    }
 
-                    textBox1.Text = recognizedText;
                 }
                 else
                 {
                     await speechSynthesizer.SpeakTextAsync("I heard"+recognizedText);
                 }
-                //await speechSynthesizer.SpeakTextAsync("you , just said."+recognizedText);
             }
            
         }
