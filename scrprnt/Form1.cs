@@ -18,8 +18,7 @@ namespace scrprnt
     {
         System.Data.DataTable dt = new System.Data.DataTable();
         private Timer yourTimer;
-        
-        
+        int flag = 0;
 
         public Form1()
         {
@@ -35,41 +34,64 @@ namespace scrprnt
             yourTimer.Interval = 5000; // Interval in milliseconds (5 seconds)
            
         }
+        //check if a method is in execution or not 
         private async void YourTimer_Tick(object sender, EventArgs e)
         {
             string subscriptionKey = Cred.subscriptionKey;
             string serviceRegion = Cred.serviceRegion;
             var speechConfig = SpeechConfig.FromSubscription(subscriptionKey, serviceRegion);
+            speechConfig.SetProperty(PropertyId.Speech_SegmentationSilenceTimeoutMs, "3000");
             var speechRecognizer = new SpeechRecognizer(speechConfig);
             var speechSynthesizer = new SpeechSynthesizer(speechConfig);
-            var result = await speechRecognizer.RecognizeOnceAsync();
-            if (result.Reason == ResultReason.RecognizedSpeech)
+            if (flag == 0)
             {
-                string recognizedText = result.Text;
-                string text_withoutChars = Program.RemoveSpecialCharacters(recognizedText);
-
-                if (text_withoutChars.ToUpper() == "HIPIXIE")
+                pixieText.Text = "Pixie is listening....";
+                var result = await speechRecognizer.RecognizeOnceAsync();
+                pixieText.Text = "Pixie is stopped,It restarts automatically";
+                flag = 1;
+                if (result.Reason == ResultReason.RecognizedSpeech)
                 {
-                    await speechSynthesizer.SpeakTextAsync("Hello,how may I assist you");
-                }
-                if (text_withoutChars.ToUpper() == "ADDCOMMENT")
-                {
-                    textBox1.Clear();
-                    await speechSynthesizer.SpeakTextAsync("Sure, Please tell me what should I add as Comment");
-                    var cmnt = await speechRecognizer.RecognizeOnceAsync();
-                    if (result.Reason == ResultReason.RecognizedSpeech)
+                    string recognizedText = result.Text;
+                    string text_withoutChars = Program.RemoveSpecialCharacters(recognizedText);
+                    if (text_withoutChars.ToUpper() == "HIPIXIE")
                     {
-                        var recognizedComment = cmnt.Text;
-                        textBox1.Text = recognizedComment;
+                        flag = 1;
+                        await speechSynthesizer.SpeakTextAsync("Hello,how may I assist you");
+                        flag = 0;
+                    }
+                    if (text_withoutChars.ToUpper() == "ADDCOMMENT")
+                    {
+                        yourTimer.Stop();
+                        textBox1.Clear();
+                        await speechSynthesizer.SpeakTextAsync("Sure, Please tell me what should I add as Comment");
+                        pixieText.Text = "Pixie is listining....";
+                        flag = 1;
+                        
+                        var cmnt = await speechRecognizer.RecognizeOnceAsync();
+                        pixieText.Text = "Please wait while comment is being added..";
+                        if (result.Reason == ResultReason.RecognizedSpeech)
+                        {
+                            var recognizedComment = cmnt.Text;
+                            textBox1.Text = recognizedComment;
+                        }
+                        flag = 0;
+                        yourTimer.Start();
+                    }
+                    if (text_withoutChars.ToUpper() == "CLICKSCREENSHOT")
+                    {   
+                        flag=1;
+                        pixieText.Text = "Please wait screenshot is being saved";
+                        await speechSynthesizer.SpeakTextAsync("Sure , please wait while I am capturing it");
+                        button1.PerformClick();
+                        await speechSynthesizer.SpeakTextAsync("Captured Screenshot");
+                        flag=0;
                     }
                 }
-                if (text_withoutChars.ToUpper() == "CLICKSCREENSHOT")
+                else
                 {
-                    await speechSynthesizer.SpeakTextAsync("Sure , please wait while I am capturing it");
-                    button1.PerformClick();
-                    await speechSynthesizer.SpeakTextAsync("Captured Screenshot");
+                    flag = 0;
                 }
-                }
+            }
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -273,8 +295,10 @@ namespace scrprnt
             var speechSynthesizer = new SpeechSynthesizer(speechConfig);
 
             await speechSynthesizer.SpeakTextAsync("Pixie is about to start ");
+            pixieText.Text = "Pixie is listening....";
             var result = await speechRecognizer.RecognizeOnceAsync();
-
+            flag = 1;
+            pixieText.Text = "Pixie is procesing options ,please wait until listen again";
             if (result.Reason == ResultReason.RecognizedSpeech)
             {
                 string recognizedText = result.Text;
@@ -282,32 +306,22 @@ namespace scrprnt
                 
                 if (text_withoutChars.ToUpper() == "HIPIXIE")
                 {
-                    await speechSynthesizer.SpeakTextAsync("Hello,how may I assist you");
+                    
                     if (yourTimer.Enabled == false)
                     {
                         yourTimer.Tick += YourTimer_Tick;
                         yourTimer.Enabled = true;
                     }
 
-                   
-                }
-                if (text_withoutChars.ToUpper() == "ADDCOMMENT")
-                {
-                    textBox1.Clear();
-                    await speechSynthesizer.SpeakTextAsync("Sure, Please tell me what should I add as Comment");
-                    var cmnt = await speechRecognizer.RecognizeOnceAsync();
-                    if (result.Reason == ResultReason.RecognizedSpeech)
-                    {
-                        var recognizedComment = cmnt.Text;
-                        textBox1.Text = recognizedComment;
-                    }
-
+                    await speechSynthesizer.SpeakTextAsync("Hello, How may I assist you?");
                 }
                 else
                 {
-                    await speechSynthesizer.SpeakTextAsync("I heard"+recognizedText);
+                    pixieText.Text = "Please press the microphone icon again and say Hi Pixie";
                 }
+
             }
+            flag=0;
            
         }
     }
