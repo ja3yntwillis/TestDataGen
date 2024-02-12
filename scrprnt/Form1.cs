@@ -30,9 +30,10 @@ namespace scrprnt
             ToolTip1.SetToolTip(this.button4, "Use microphone to speak");
             ToolTip1.SetToolTip(this.button5, "Export Result to PDF");
             ToolTip1.SetToolTip(this.button6, "Export Screenshots to Zip");
+            ToolTip1.SetToolTip(this.button7, "Upload To Jira");
             yourTimer = new Timer();
             yourTimer.Interval = 5000; // Interval in milliseconds (5 seconds)
-           
+
         }
         //check if a method is in execution or not 
         private async void YourTimer_Tick(object sender, EventArgs e)
@@ -66,7 +67,7 @@ namespace scrprnt
                         await speechSynthesizer.SpeakTextAsync("Sure, Please tell me what should I add as Comment");
                         pixieText.Text = "Pixie is listining....";
                         flag = 1;
-                        
+
                         var cmnt = await speechRecognizer.RecognizeOnceAsync();
                         pixieText.Text = "Please wait while comment is being added..";
                         if (result.Reason == ResultReason.RecognizedSpeech)
@@ -78,13 +79,13 @@ namespace scrprnt
                         yourTimer.Start();
                     }
                     if (text_withoutChars.ToUpper() == "CLICKSCREENSHOT")
-                    {   
-                        flag=1;
+                    {
+                        flag = 1;
                         pixieText.Text = "Please wait screenshot is being saved";
                         await speechSynthesizer.SpeakTextAsync("Sure , please wait while I am capturing it");
                         button1.PerformClick();
                         await speechSynthesizer.SpeakTextAsync("Captured Screenshot");
-                        flag=0;
+                        flag = 0;
                     }
                 }
                 else
@@ -112,6 +113,10 @@ namespace scrprnt
             button2.Enabled = true;
             button5.Enabled = true;
             button6.Enabled = true;
+            if (checkBox1.Checked == true)
+            {
+                button7.Enabled = true;
+            }
 
         }
 
@@ -150,6 +155,7 @@ namespace scrprnt
                 button2.Enabled = false;
                 button5.Enabled = false;
                 button6.Enabled = false;
+                button7.Enabled = false;
                 textBox1.Clear();
                 string message = "Screenshot Document saved at Result folder.";
 
@@ -219,6 +225,7 @@ namespace scrprnt
                 button2.Enabled = false;
                 button5.Enabled = false;
                 button6.Enabled = false;
+                button7.Enabled = false;
                 textBox1.Clear();
                 string message = "Screenshot PDF saved at Result folder.";
 
@@ -274,6 +281,7 @@ namespace scrprnt
             button2.Enabled = false;
             button5.Enabled = false;
             button6.Enabled = false;
+            button7.Enabled = false;
             textBox1.Clear();
             string message = "Screenshots are zipped and saved at Result folder with comments in csv";
 
@@ -303,10 +311,10 @@ namespace scrprnt
             {
                 string recognizedText = result.Text;
                 string text_withoutChars = Program.RemoveSpecialCharacters(recognizedText);
-                
+
                 if (text_withoutChars.ToUpper() == "HIPIXIE")
                 {
-                    
+
                     if (yourTimer.Enabled == false)
                     {
                         yourTimer.Tick += YourTimer_Tick;
@@ -321,9 +329,26 @@ namespace scrprnt
                 }
 
             }
-            flag=0;
-           
+            flag = 0;
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if(checkBox1.Checked && button6.Enabled)
+            {
+                button7.Enabled = true;
+            }
+            else
+            {
+                button7.Enabled = false;
+            }
         }
     }
-    
+
 }

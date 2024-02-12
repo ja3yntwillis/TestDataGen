@@ -40,13 +40,17 @@
             button6 = new Button();
             linkLabel1 = new LinkLabel();
             pixieText = new Label();
+            textBox2 = new TextBox();
+            label3 = new Label();
+            checkBox1 = new CheckBox();
+            button7 = new Button();
             SuspendLayout();
             // 
             // button1
             // 
             button1.BackgroundImage = Properties.Resources.screenshot;
             button1.BackgroundImageLayout = ImageLayout.None;
-            button1.Location = new Point(404, 61);
+            button1.Location = new Point(467, 120);
             button1.Name = "button1";
             button1.Size = new Size(93, 90);
             button1.TabIndex = 0;
@@ -58,7 +62,7 @@
             button2.BackgroundImage = Properties.Resources.word;
             button2.BackgroundImageLayout = ImageLayout.None;
             button2.Enabled = false;
-            button2.Location = new Point(180, 184);
+            button2.Location = new Point(222, 231);
             button2.Name = "button2";
             button2.Size = new Size(96, 89);
             button2.TabIndex = 1;
@@ -69,7 +73,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold);
-            label1.Location = new Point(26, 33);
+            label1.Location = new Point(26, 87);
             label1.Name = "label1";
             label1.Size = new Size(175, 25);
             label1.TabIndex = 2;
@@ -77,17 +81,17 @@
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(26, 61);
+            textBox1.Location = new Point(26, 118);
             textBox1.Multiline = true;
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(299, 90);
+            textBox1.Size = new Size(364, 96);
             textBox1.TabIndex = 3;
             // 
             // button3
             // 
             button3.BackgroundImage = Properties.Resources.reset;
             button3.BackgroundImageLayout = ImageLayout.None;
-            button3.Location = new Point(341, 61);
+            button3.Location = new Point(403, 120);
             button3.Name = "button3";
             button3.Size = new Size(40, 40);
             button3.TabIndex = 4;
@@ -98,7 +102,7 @@
             // 
             button4.BackgroundImage = Properties.Resources.microphone;
             button4.BackgroundImageLayout = ImageLayout.Center;
-            button4.Location = new Point(339, 111);
+            button4.Location = new Point(403, 172);
             button4.Name = "button4";
             button4.Size = new Size(40, 40);
             button4.TabIndex = 5;
@@ -109,7 +113,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(26, 214);
+            label2.Location = new Point(27, 291);
             label2.Name = "label2";
             label2.Size = new Size(132, 25);
             label2.TabIndex = 6;
@@ -120,7 +124,7 @@
             button5.BackgroundImage = Properties.Resources.pdf;
             button5.BackgroundImageLayout = ImageLayout.None;
             button5.Enabled = false;
-            button5.Location = new Point(294, 184);
+            button5.Location = new Point(347, 231);
             button5.Name = "button5";
             button5.Size = new Size(96, 89);
             button5.TabIndex = 7;
@@ -132,7 +136,7 @@
             button6.BackgroundImage = Properties.Resources.zipped;
             button6.BackgroundImageLayout = ImageLayout.None;
             button6.Enabled = false;
-            button6.Location = new Point(404, 184);
+            button6.Location = new Point(467, 231);
             button6.Name = "button6";
             button6.Size = new Size(93, 89);
             button6.TabIndex = 8;
@@ -142,12 +146,12 @@
             // linkLabel1
             // 
             linkLabel1.AutoSize = true;
-            linkLabel1.Location = new Point(35, 280);
+            linkLabel1.Location = new Point(26, 351);
             linkLabel1.Name = "linkLabel1";
-            linkLabel1.Size = new Size(432, 20);
+            linkLabel1.Size = new Size(399, 20);
             linkLabel1.TabIndex = 9;
             linkLabel1.TabStop = true;
-            linkLabel1.Text = "Click here to open the result folder - This contains (docx,pdf,zip)";
+            linkLabel1.Text = "Click to open the result folder - This contains (docx,pdf,zip)";
             linkLabel1.LinkClicked += linkLabel1_LinkClicked;
             // 
             // pixieText
@@ -160,6 +164,46 @@
             pixieText.TabIndex = 10;
             pixieText.Text = "Activate Pixie by saying \"Hi Pixie\" to initiate your conversation";
             // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(206, 54);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(357, 27);
+            textBox2.TabIndex = 11;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.Location = new Point(27, 53);
+            label3.Name = "label3";
+            label3.Size = new Size(120, 25);
+            label3.TabIndex = 13;
+            label3.Text = "Jira issue key";
+            // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(26, 393);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(384, 24);
+            checkBox1.TabIndex = 12;
+            checkBox1.Text = "I want to continue this document for JIRA Attachment";
+            checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
+            // 
+            // button7
+            // 
+            button7.BackgroundImage = Properties.Resources.jira1;
+            button7.BackgroundImageLayout = ImageLayout.Center;
+            button7.Enabled = false;
+            button7.Location = new Point(467, 337);
+            button7.Name = "button7";
+            button7.Size = new Size(93, 89);
+            button7.TabIndex = 14;
+            button7.UseVisualStyleBackColor = true;
+            button7.Click += button7_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -167,7 +211,11 @@
             BackColor = Color.White;
             BackgroundImage = Properties.Resources.duck_21863;
             BackgroundImageLayout = ImageLayout.None;
-            ClientSize = new Size(522, 309);
+            ClientSize = new Size(580, 443);
+            Controls.Add(button7);
+            Controls.Add(label3);
+            Controls.Add(checkBox1);
+            Controls.Add(textBox2);
             Controls.Add(pixieText);
             Controls.Add(linkLabel1);
             Controls.Add(button6);
@@ -182,8 +230,8 @@
             DoubleBuffered = true;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
-            MaximumSize = new Size(540, 356);
-            MinimumSize = new Size(540, 356);
+            MaximumSize = new Size(598, 490);
+            MinimumSize = new Size(598, 490);
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Pixie";
@@ -205,5 +253,9 @@
         private Button button6;
         private LinkLabel linkLabel1;
         private Label pixieText;
+        private TextBox textBox2;
+        private Label label3;
+        private CheckBox checkBox1;
+        private Button button7;
     }
 }
