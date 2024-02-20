@@ -55,45 +55,7 @@ namespace scrprnt
         }
 
 
-        /*  public static async System.Threading.Tasks.Task buttonShowMessageBox_ClickAsync(object? sender, EventArgs e)
-          {
-              // Check some condition
-              // bool condition = true;
-              var (summary, assignee) = await JiraClient.FetchJiraTitleAndAssignee(sender, e);
-              if (summary != null && assignee != null)
-              {
-                  Console.WriteLine($"Title: {summary}");
-                  Console.WriteLine($"Assignee: {assignee}");
-                  // Call other methods or perform operations using summary and assignee values
-
-                  // Ensure this code runs on the UI thread
-                  if (sender is Control control)
-                  {
-                      control.Invoke((MethodInvoker)(() =>
-                      {
-                          DialogResult result = MessageBox.Show($" Title is: {summary}. \n  Assignee is:  {assignee}. \n Do you want to proceed?\n", "Conditional Message Box", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                          if (result == DialogResult.Yes)
-                          {
-                              // User clicked Yes, perform the action
-                              MessageBox.Show("Proceeding as per user choice.");
-                          }
-                          else
-                          {
-                              // User clicked No, do nothing or show another message
-                              MessageBox.Show("Action cancelled by user.");
-
-                          }
-                      }));
-                  }
-              }
-              else
-              {
-                  MessageBox.Show("Condition is false. Not showing message box.", "Conditional Message Box", MessageBoxButtons.OK, MessageBoxIcon.Information);
-              }
-          }*/
-
-
-        public static async System.Threading.Tasks.Task buttonShowMessageBox_ClickAsync(object? sender, EventArgs e)
+       public static async System.Threading.Tasks.Task buttonShowMessageBox_ClickAsync(object? sender, EventArgs e)
         {
             // Check some condition
             // bool condition = true;
@@ -145,7 +107,6 @@ namespace scrprnt
 
                                                 if (fileExists)
                                                 {
-                                                   // await APIProgram.buttonShowMessageBox_ClickAsync(sender, e);
                                                     // If the file already exists as an attachment, rename the file and upload it again
                                                     string renamedFileName = Program.RenameFile(fileName);
                                                     await APIProgram.ConfigureJiraHttpClient(client, jiraBaseUrl, username, password, issueKey);
@@ -155,7 +116,6 @@ namespace scrprnt
                                                 {
                                                     // If the file does not exist as an attachment, upload it
                                                     Console.WriteLine("The file does not exist as an attachment.");
-                                                   // await APIProgram.buttonShowMessageBox_ClickAsync(sender, e);
                                                     await APIProgram.ConfigureJiraHttpClient(client, jiraBaseUrl, username, password, issueKey);
                                                     await JiraClient.UploadFile(client, issueKey, filePath, fileName);
                                                 }

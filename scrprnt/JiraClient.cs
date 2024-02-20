@@ -156,28 +156,7 @@ namespace scrprnt
             }
         }
 
-        /* public static async System.Threading.Tasks.Task FetchJiraTitleAndAssignee(object sender, EventArgs e)
-          {
-              string jiraBaseUrl = Cred.jiraBaseUrl;
-              string issueKey = Cred.issueKey;
-              string accessToken = Cred.accessToken; // Replace with your access token or other authentication mechanism
-
-              JiraIssue issueDetails = await GetIssueDetails(jiraBaseUrl, issueKey, accessToken);
-              if (issueDetails != null)
-              {
-                  Console.WriteLine($"Title: {issueDetails.Fields.Summary}");
-                  Console.WriteLine($"Assignee: {issueDetails.Fields.Assignee?.DisplayName}");
-                  if (((issueDetails.Fields.Summary) != null) && ((issueDetails.Fields.Assignee?.DisplayName) != null))
-                  {
-                      APIProgram.buttonShowMessageBox_Click(sender, e);
-                  }
-              }
-              else
-              {
-                  Console.WriteLine($"Failed to fetch issue details for {issueKey}");
-              }
-          }*/
-
+    
         public static async System.Threading.Tasks.Task<(string summary, string assignee)> FetchJiraTitleAndAssignee(object sender, EventArgs e)
             {
                 string jiraBaseUrl = Cred.jiraBaseUrl;
