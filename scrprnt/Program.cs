@@ -1,4 +1,7 @@
 using System.Text.RegularExpressions;
+using System;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace scrprnt
 {
@@ -72,5 +75,27 @@ namespace scrprnt
 
             return result;
         }
+
+        
+        public static string RenameFile(string fileName)
+        {
+            // Implement file renaming logic here
+            return "renamed_" + fileName;
+        }
+
+        //public static string RenameFile(string fileName)
+        //{
+        //    // Split the file name and extension
+        //    string nameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
+        //    string fileExtension = Path.GetExtension(fileName);
+
+        //    // Append timestamp to the file name
+        //    string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
+        //    string renamedFileName = $"{nameWithoutExtension}_{timestamp}{fileExtension}";
+
+        //    return renamedFileName;
+        //}
+
+
     }
 }
