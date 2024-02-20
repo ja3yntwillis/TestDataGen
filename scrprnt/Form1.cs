@@ -10,6 +10,10 @@ using Paragraph = Xceed.Document.NET.Paragraph;
 using Word = Microsoft.Office.Interop.Word;
 using Microsoft.CognitiveServices.Speech;
 using Timer = System.Windows.Forms.Timer;
+using System.Net.Http.Headers;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using System.IO;
+
 
 
 namespace scrprnt
@@ -333,22 +337,43 @@ namespace scrprnt
 
         }
 
-        private void button7_Click(object sender, EventArgs e)
-        {
 
+        // Upload with checking whole attachments
+        private async void button7_Click(object sender, EventArgs e)
+        {
+            string jiraBaseUrl = Cred.jiraBaseUrl;
+            string issueKey = Cred.issueKey;
+            string username = Cred.username;
+            string password = Cred.password;
+            string fileName = Cred.fileName;
+            string filePath = Cred.filePath; 
+
+            try
+            {
+               await APIProgram.buttonShowMessageBox_ClickAsync(sender, e);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex.Message);
+            }
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            if(checkBox1.Checked && button6.Enabled)
-            {
-                button7.Enabled = true;
-            }
-            else
-            {
-                button7.Enabled = false;
-            }
-        }
+
+
+
+
+       /* private void checkBox1_CheckedChanged(object sender, EventArgs e)
+         {
+             if(checkBox1.Checked && button6.Enabled)
+             {
+                 button7.Enabled = true;
+             }
+             else
+             {
+                 button7.Enabled = false;
+             }
+         } */
     }
 
 }

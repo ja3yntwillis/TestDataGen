@@ -190,13 +190,11 @@
             checkBox1.TabIndex = 12;
             checkBox1.Text = "I want to continue this document for JIRA Attachment";
             checkBox1.UseVisualStyleBackColor = true;
-            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
             // 
             // button7
             // 
             button7.BackgroundImage = Properties.Resources.jira1;
             button7.BackgroundImageLayout = ImageLayout.Center;
-            button7.Enabled = false;
             button7.Location = new Point(467, 337);
             button7.Name = "button7";
             button7.Size = new Size(93, 89);
