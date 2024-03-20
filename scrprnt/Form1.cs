@@ -13,6 +13,7 @@ using Timer = System.Windows.Forms.Timer;
 using System.Net.Http.Headers;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using System.IO;
+using System.Diagnostics;
 
 
 
@@ -128,7 +129,8 @@ namespace scrprnt
         {
             string folderPath = @"screenshot\";
             string currentDate = DateTime.Now.ToString("MMddyyyyHHmmss");
-            string outputPath = $"result\\Result_{currentDate}.docx";
+            string issueKey = textBox2.Text;
+            string outputPath = $"result\\Result_{issueKey}_{currentDate}.docx";
 
             // Create a new Word document
             using (DocX doc = DocX.Create(outputPath))
@@ -164,6 +166,11 @@ namespace scrprnt
                 string message = "Screenshot Document saved at Result folder.";
 
                 MessageBox.Show(message, "MessageBox Title", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (checkBox1.Checked)
+                {
+                    button7_Click(sender, e);
+
+                }
             }
 
         }
@@ -178,8 +185,8 @@ namespace scrprnt
             string folderPath = @"screenshot\";
             string currentDate = DateTime.Now.ToString("MMddyyyyHHmmss");
             string outputPath = $"result\\Result_{currentDate}.docx";
-            string outputPathPDF = $"result\\Result_{currentDate}.pdf";
-
+            string issueKey = textBox2.Text;
+            string outputPathPDF = $"result\\Result_{issueKey}_{currentDate}.pdf";
             // Create a new Word document
             using (DocX doc = DocX.Create(outputPath))
             {
@@ -234,6 +241,11 @@ namespace scrprnt
                 string message = "Screenshot PDF saved at Result folder.";
 
                 MessageBox.Show(message, "MessageBox Title", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (checkBox1.Checked)
+                {
+                    button7_Click(sender, e);
+
+                }
             }
         }
 
@@ -241,7 +253,8 @@ namespace scrprnt
         {
             string folderPath = @"screenshot\";
             string currentDate = DateTime.Now.ToString("MMddyyyyHHmmss");
-            string outputPath = $"result\\Result_{currentDate}.zip";
+            string issueKey = textBox2.Text;
+            string outputPath = $"result\\Result_{issueKey}_{currentDate}.zip";
             StreamWriter sw = new StreamWriter(@"screenshot\\comments.csv", false);
 
             for (int i = 0; i < dt.Columns.Count; i++)
@@ -290,6 +303,11 @@ namespace scrprnt
             string message = "Screenshots are zipped and saved at Result folder with comments in csv";
 
             MessageBox.Show(message, "MessageBox Title", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (checkBox1.Checked)
+            {
+                button7_Click(sender, e);
+
+            }
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -342,15 +360,14 @@ namespace scrprnt
         private async void button7_Click(object sender, EventArgs e)
         {
             string jiraBaseUrl = Cred.jiraBaseUrl;
-            string issueKey = Cred.issueKey;
+            string issueKey = textBox2.Text;
             string username = Cred.username;
             string password = Cred.password;
-            string fileName = Cred.fileName;
-            string filePath = Cred.filePath; 
+            string filePath = Cred.filePath;
 
             try
             {
-               await APIProgram.buttonShowMessageBox_ClickAsync(sender, e);
+                await APIProgram.jiraFunctionality_ClickAsync(sender, e);
 
             }
             catch (Exception ex)
@@ -359,12 +376,45 @@ namespace scrprnt
             }
         }
 
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            var jiraId = textBox2.Text;
+            // Enable the checkbox if textbox has value, otherwise disable it
+            checkBox1.Checked = !string.IsNullOrEmpty(textBox2.Text);
+            Program.HandleSpacebarKeyPress(textBox2);
+
+        }
+
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var issueKey = Cred.issueKey;
+            try
+            {
+                // Construct the Jira issue URL
+                string jiraUrl = $"https://jira.extendhealth.com/browse/{issueKey}";
+
+                // Start the process using ProcessStartInfo
+                System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = jiraUrl,
+                    UseShellExecute = true
+                };
+                System.Diagnostics.Process.Start(psi);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while opening the Jira URL: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        
 
 
 
-
-       /* private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        /*private void checkBox1_CheckedChanged(object sender, EventArgs e)
          {
+        //button7_Click(sender, e);
              if(checkBox1.Checked && button6.Enabled)
              {
                  button7.Enabled = true;

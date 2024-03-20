@@ -18,6 +18,9 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using scrprnt;
+using static System.Windows.Forms.DataFormats;
+using System.Reflection.Metadata;
+using System.Windows.Forms;
 
 namespace scrprnt
 {
@@ -52,8 +55,7 @@ namespace scrprnt
 
                 if (response.IsSuccessStatusCode)
                 {
-                    // var content = await response.Content.ReadAsStringAsync();
-                    //var issue = JsonConvert.DeserializeObject<JiraIssue>(content);
+                    
                     var content = await response.Content.ReadAsStringAsync();
                     var issue = DeserializeJiraIssue(content);
 
@@ -72,7 +74,7 @@ namespace scrprnt
             }
             catch (Exception ex)
             {
-                throw new Exception($"An error occurred while retrieving issue {issueKey}: {ex.Message}", ex);
+                throw new Exception($"Ticket Not Found. An error occurred while retrieving issue {issueKey}: {ex.Message}", ex);
             }
         }
 
@@ -109,33 +111,112 @@ namespace scrprnt
         }
 
 
-      
-       public static async System.Threading.Tasks.Task UploadFile(HttpClient client, string issueKey, string filePath, string fileName)
+
+        //public static async System.Threading.Tasks.Task UploadFile(HttpClient client, string issueKey, string filePath, string fileName)
+        //{
+
+        //    // Check if the folder exists
+        //    if (Directory.Exists(Cred.folderPath))
+        //    {
+        //        // Get all files in the folder
+        //        string[] files = Directory.GetFiles(Cred.folderPath);
+
+        //        // Check if there are any files in the folder
+        //        if (files.Length > 0)
+        //        {
+        //            // Get the latest file based on last write time
+        //            string latestFile = files.OrderByDescending(f => new FileInfo(f).LastWriteTime).First();
+
+
+        //            // Implement file upload logic here
+        //            //  Read the file
+        //    var fileBytes = System.IO.File.ReadAllBytes(filePath);
+
+        //    // Construct the request content
+        //    var multipartContent = new MultipartFormDataContent();
+        //    var fileContent = new ByteArrayContent(fileBytes);
+        //    fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+        //    //multipartContent.Add(fileContent, "file", fileName);
+        //    multipartContent.Add(fileContent, "file", latestFile);
+
+        //    // Send the request to upload attachment
+        //    try
+        //    {
+        //        var response = await client.PostAsync($"/rest/api/2/issue/{issueKey}/attachments", multipartContent);
+        //        Console.WriteLine($"Uploading file '{fileName}' to issue '{issueKey}'...");
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            MessageBox.Show("Attachment uploaded successfully.");
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("Failed to upload attachment. Status code: " + response.StatusCode);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Handle document upload error
+        //        MessageBox.Show("Document upload failed: " + ex.Message);
+        //    }
+        //    }
+        //    else
+        //        {
+        //            Console.WriteLine("No files found in the specified folder.");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("Specified folder does not exist.");
+        //    }
+
+
+        //}
+
+
+        public static async System.Threading.Tasks.Task UploadFile(HttpClient client, string issueKey, string fileName)
         {
-            {
-                // Implement file upload logic here
-                //  Read the file
-                var fileBytes = System.IO.File.ReadAllBytes(filePath);
+            Cred.filePath= @"result\" + fileName;
+            // Implement file upload logic here
+            //  Read the file
+            var fileBytes = System.IO.File.ReadAllBytes(Cred.filePath);
 
-                // Construct the request content
-                var multipartContent = new MultipartFormDataContent();
-                var fileContent = new ByteArrayContent(fileBytes);
-                fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                multipartContent.Add(fileContent, "file", fileName);
+                    // Construct the request content
+                    var multipartContent = new MultipartFormDataContent();
+                    var fileContent = new ByteArrayContent(fileBytes);
+                    fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                    multipartContent.Add(fileContent, "file", fileName);
+                    // Send the request to upload attachment
+                    try
+                    {
+                        var response = await client.PostAsync($"/rest/api/2/issue/{issueKey}/attachments", multipartContent);
+                        Console.WriteLine($"Uploading file '{fileName}' to issue '{issueKey}'...");
+                        if (response.IsSuccessStatusCode)
+                        {
+                            MessageBox.Show("Attachment uploaded successfully.");
+                    Cred.issueKey = issueKey;
+                    Form1.textBox2.Clear();
+                    Form1.checkBox1.Checked = false;
+                    Form1.linkLabel2.Visible = true;
+                    Form1.linkLabel2.Enabled = true;
+                    
 
-                // Send the request to upload attachment
-                var response = await client.PostAsync($"/rest/api/2/issue/{issueKey}/attachments", multipartContent);
-                Console.WriteLine($"Uploading file '{fileName}' to issue '{issueKey}'...");
-                if (response.IsSuccessStatusCode)
-                {
-                    MessageBox.Show("Attachment uploaded successfully.");
+
                 }
-                else
-                {
-                    MessageBox.Show("Failed to upload attachment. Status code: " + response.StatusCode);
-                }
-            }
+                        else
+                        {
+                            MessageBox.Show("Failed to upload attachment. Status code: " + response.StatusCode);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle document upload error
+                        MessageBox.Show("Document upload failed: " + ex.Message);
+                    }
+                
+
+
         }
+
 
 
         public static async Task<JiraIssue> GetIssueDetails(string jiraBaseUrl, string issueKey, string accessToken)
@@ -147,21 +228,25 @@ namespace scrprnt
                 httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {accessToken}");
 
                 HttpResponseMessage response = await httpClient.GetAsync($"/rest/api/2/issue/{issueKey}");
-
+               
                 if (response.IsSuccessStatusCode)
                 {
                     return await response.Content.ReadFromJsonAsync<JiraIssue>();
                 }
-                return null;
+                
+                else
+                {
+                    throw new Exception("Ticket Not Found. Failed to get issue details of "+ issueKey +". HTTP Status: " + response.StatusCode);
+                }
             }
         }
 
     
         public static async System.Threading.Tasks.Task<(string summary, string assignee)> FetchJiraTitleAndAssignee(object sender, EventArgs e)
             {
-                string jiraBaseUrl = Cred.jiraBaseUrl;
-                string issueKey = Cred.issueKey;
-                string accessToken = Cred.accessToken; // Replace with your access token or other authentication mechanism
+            string jiraBaseUrl = Cred.jiraBaseUrl;
+            string issueKey = Form1.textBox2.Text;
+            string accessToken = Cred.accessToken; // Replace with your access token or other authentication mechanism
 
                 JiraIssue issueDetails = await GetIssueDetails(jiraBaseUrl, issueKey, accessToken);
                 if (issueDetails != null)

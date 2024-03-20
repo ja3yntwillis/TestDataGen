@@ -2,6 +2,7 @@ using System.Text.RegularExpressions;
 using System;
 using System.Threading;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace scrprnt
 {
@@ -97,5 +98,73 @@ namespace scrprnt
         //}
 
 
+       public static int GetTotalFileSize(string filePath)
+        {
+            // Check if the file exists
+            if (File.Exists(filePath))
+            {
+                // Get the FileInfo object for the file
+                FileInfo fileInfo = new FileInfo(filePath);
+
+                // Get the file size in bytes
+                long fileSizeBytes = fileInfo.Length;
+
+                return (int)fileSizeBytes; // Convert long to int (assuming file size won't exceed int range)
+            }
+            else
+            {
+                Console.WriteLine("File does not exist.");
+                return -1; // Return -1 to indicate file not found
+            }
+        }
+
+        public static string GetLatestFileName(string folderPath)
+        {
+            if (Directory.Exists(folderPath))
+            {
+                // Get all files in the folder
+                string[] files = Directory.GetFiles(folderPath);
+
+                // Check if there are any files in the folder
+                if (files.Length > 0)
+                {
+                    // Get the latest file based on last write time
+                    string latestFile = files.OrderByDescending(f => new FileInfo(f).LastWriteTime).First();
+
+                    // Extract and return the file name
+                    return Path.GetFileName(latestFile);
+                }
+            }
+            return null; // Return null if folder doesn't exist or no files found
+        }
+
+
+        public static void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Check if the pressed key is the spacebar
+            if (e.KeyCode == Keys.Space)
+            {
+                // Prevent the checkbox from being checked
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        public static void HandleSpacebarKeyPress(System.Windows.Forms.TextBox textBox)
+        {
+            // Get the cursor position
+            int cursorPosition = textBox.SelectionStart;
+
+            // Check if the last character entered is a space
+            if (textBox.Text.Length > 0 && textBox.Text[cursorPosition - 1] == ' ')
+            {
+                // If the last character entered is a space, remove it
+                textBox.Text = textBox.Text.Remove(cursorPosition - 1, 1);
+
+                // Move the cursor back
+                textBox.SelectionStart = cursorPosition - 1;
+                textBox.SelectionLength = 0;
+            }
+        }
     }
 }
