@@ -55,16 +55,14 @@ namespace scrprnt
         }
 
 
-       public static async System.Threading.Tasks.Task buttonShowMessageBox_ClickAsync(object? sender, EventArgs e)
+       public static async System.Threading.Tasks.Task jiraFunctionality_ClickAsync(object? sender, EventArgs e)
         {
             // Check some condition
-            // bool condition = true;
             string jiraBaseUrl = Cred.jiraBaseUrl;
-            string issueKey = Cred.issueKey;
+            string issueKey = Form1.textBox2.Text;
             string username = Cred.username;
             string password = Cred.password;
-            string fileName = Cred.fileName;
-            string filePath = Cred.filePath;
+            string fileName = Program.GetLatestFileName(Cred.folderPath);
             var (summary, assignee) = await JiraClient.FetchJiraTitleAndAssignee(sender, e);
             switch (summary != null && assignee != null)
             {
@@ -110,14 +108,14 @@ namespace scrprnt
                                                     // If the file already exists as an attachment, rename the file and upload it again
                                                     string renamedFileName = Program.RenameFile(fileName);
                                                     await APIProgram.ConfigureJiraHttpClient(client, jiraBaseUrl, username, password, issueKey);
-                                                    await JiraClient.UploadFile(client, issueKey, filePath, renamedFileName);
+                                                    await JiraClient.UploadFile(client, issueKey, renamedFileName);
                                                 }
                                                 else
                                                 {
                                                     // If the file does not exist as an attachment, upload it
                                                     Console.WriteLine("The file does not exist as an attachment.");
                                                     await APIProgram.ConfigureJiraHttpClient(client, jiraBaseUrl, username, password, issueKey);
-                                                    await JiraClient.UploadFile(client, issueKey, filePath, fileName);
+                                                    await JiraClient.UploadFile(client, issueKey, fileName);
                                                 }
                                             }
                                             else

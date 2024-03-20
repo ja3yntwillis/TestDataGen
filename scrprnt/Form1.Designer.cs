@@ -44,13 +44,14 @@
             label3 = new Label();
             checkBox1 = new CheckBox();
             button7 = new Button();
+            linkLabel2 = new LinkLabel();
             SuspendLayout();
             // 
             // button1
             // 
             button1.BackgroundImage = Properties.Resources.screenshot;
             button1.BackgroundImageLayout = ImageLayout.None;
-            button1.Location = new Point(467, 120);
+            button1.Location = new Point(470, 152);
             button1.Name = "button1";
             button1.Size = new Size(93, 90);
             button1.TabIndex = 0;
@@ -62,7 +63,7 @@
             button2.BackgroundImage = Properties.Resources.word;
             button2.BackgroundImageLayout = ImageLayout.None;
             button2.Enabled = false;
-            button2.Location = new Point(222, 231);
+            button2.Location = new Point(218, 268);
             button2.Name = "button2";
             button2.Size = new Size(96, 89);
             button2.TabIndex = 1;
@@ -73,7 +74,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold);
-            label1.Location = new Point(26, 87);
+            label1.Location = new Point(27, 124);
             label1.Name = "label1";
             label1.Size = new Size(175, 25);
             label1.TabIndex = 2;
@@ -81,7 +82,7 @@
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(26, 118);
+            textBox1.Location = new Point(33, 152);
             textBox1.Multiline = true;
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(364, 96);
@@ -91,7 +92,7 @@
             // 
             button3.BackgroundImage = Properties.Resources.reset;
             button3.BackgroundImageLayout = ImageLayout.None;
-            button3.Location = new Point(403, 120);
+            button3.Location = new Point(403, 152);
             button3.Name = "button3";
             button3.Size = new Size(40, 40);
             button3.TabIndex = 4;
@@ -102,7 +103,7 @@
             // 
             button4.BackgroundImage = Properties.Resources.microphone;
             button4.BackgroundImageLayout = ImageLayout.Center;
-            button4.Location = new Point(403, 172);
+            button4.Location = new Point(403, 208);
             button4.Name = "button4";
             button4.Size = new Size(40, 40);
             button4.TabIndex = 5;
@@ -124,7 +125,7 @@
             button5.BackgroundImage = Properties.Resources.pdf;
             button5.BackgroundImageLayout = ImageLayout.None;
             button5.Enabled = false;
-            button5.Location = new Point(347, 231);
+            button5.Location = new Point(338, 268);
             button5.Name = "button5";
             button5.Size = new Size(96, 89);
             button5.TabIndex = 7;
@@ -136,7 +137,7 @@
             button6.BackgroundImage = Properties.Resources.zipped;
             button6.BackgroundImageLayout = ImageLayout.None;
             button6.Enabled = false;
-            button6.Location = new Point(467, 231);
+            button6.Location = new Point(457, 268);
             button6.Name = "button6";
             button6.Size = new Size(93, 89);
             button6.TabIndex = 8;
@@ -146,7 +147,7 @@
             // linkLabel1
             // 
             linkLabel1.AutoSize = true;
-            linkLabel1.Location = new Point(26, 351);
+            linkLabel1.Location = new Point(26, 360);
             linkLabel1.Name = "linkLabel1";
             linkLabel1.Size = new Size(399, 20);
             linkLabel1.TabIndex = 9;
@@ -167,9 +168,11 @@
             // textBox2
             // 
             textBox2.Location = new Point(206, 54);
+            textBox2.Multiline = true;
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(357, 27);
             textBox2.TabIndex = 11;
+            textBox2.TextChanged += textBox2_TextChanged;
             // 
             // label3
             // 
@@ -184,23 +187,36 @@
             // checkBox1
             // 
             checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(26, 393);
+            checkBox1.Location = new Point(33, 97);
             checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(384, 24);
+            checkBox1.Size = new Size(327, 24);
             checkBox1.TabIndex = 12;
-            checkBox1.Text = "I want to continue this document for JIRA Attachment";
+            checkBox1.Text = "On Save Document Will be Uploaded In JIRA";
             checkBox1.UseVisualStyleBackColor = true;
             // 
             // button7
             // 
             button7.BackgroundImage = Properties.Resources.jira1;
             button7.BackgroundImageLayout = ImageLayout.Center;
-            button7.Location = new Point(467, 337);
+            button7.Location = new Point(457, 360);
             button7.Name = "button7";
             button7.Size = new Size(93, 89);
             button7.TabIndex = 14;
             button7.UseVisualStyleBackColor = true;
-            button7.Click += button7_Click;
+            button7.Visible = false;
+            // 
+            // linkLabel2
+            // 
+            linkLabel2.AutoSize = true;
+            linkLabel2.Enabled = false;
+            linkLabel2.Location = new Point(27, 405);
+            linkLabel2.Name = "linkLabel2";
+            linkLabel2.Size = new Size(212, 20);
+            linkLabel2.TabIndex = 15;
+            linkLabel2.TabStop = true;
+            linkLabel2.Text = "Click here to view the Jira issue";
+            linkLabel2.Visible = false;
+            linkLabel2.LinkClicked += linkLabel2_LinkClicked;
             // 
             // Form1
             // 
@@ -210,6 +226,7 @@
             BackgroundImage = Properties.Resources.duck_21863;
             BackgroundImageLayout = ImageLayout.None;
             ClientSize = new Size(580, 443);
+            Controls.Add(linkLabel2);
             Controls.Add(button7);
             Controls.Add(label3);
             Controls.Add(checkBox1);
@@ -251,9 +268,10 @@
         private Button button6;
         private LinkLabel linkLabel1;
         private Label pixieText;
-        private TextBox textBox2;
         private Label label3;
-        private CheckBox checkBox1;
         private Button button7;
+        public static LinkLabel linkLabel2;
+        public static TextBox textBox2;
+        public  static CheckBox checkBox1;
     }
 }
